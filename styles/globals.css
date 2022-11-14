@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .header-style {
+      @apply fixed top-0 z-30 flex justify-between w-full px-4 py-3 space-x-4 bg-white shadow-sm;
+    }
+  }
 
 main {
-    padding-inline: 16px;
+    padding: 120px 16px;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
 }
