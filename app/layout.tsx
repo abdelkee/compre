@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import Navigation from "./components/Navigation";
+import ContextProvider from "./utils/contextProvider";
 
 export default function RootLayout({
   children,
@@ -10,8 +11,10 @@ export default function RootLayout({
     <html>
       <head />
       <body className="min-h-screen bg-purple-50">
-        {children}
-        <Navigation />
+        <ContextProvider>
+          {children}
+          <Navigation />
+        </ContextProvider>
       </body>
     </html>
   );
