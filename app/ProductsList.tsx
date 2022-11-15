@@ -1,5 +1,7 @@
+import ProductCard from "./ProductCard";
+
 export const data = [
-  "enero",
+  "enero febrero hadak",
   "febrero",
   "marzo",
   "abril",
@@ -10,11 +12,11 @@ export const data = [
 
 function ProductsList() {
   return (
-    <>
-      {data.map((name) => (
-        <li>{name}</li>
+    <section className="grid grid-cols-2 gap-4">
+      {data.map((product) => (
+        <ProductCard product={product} />
       ))}
-    </>
+    </section>
   );
 }
 

@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "../components/Button";
 import { MdPayments, MdOutlineSell, MdPriceCheck } from "react-icons/md";
 
@@ -11,7 +9,7 @@ function Header() {
       </div>
       <div className="flex items-center space-x-2">
         <p className="font-semibold text-green-900">$ 32.50</p>
-        <Button shape={"square"} execute={() => {}}>
+        <Button shape={"square"} execute={"openOrderModal"}>
           <MdPayments size={"24px"} />
         </Button>
       </div>
