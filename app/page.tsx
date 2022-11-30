@@ -1,6 +1,7 @@
 import Header from "./Header";
+import NewOrder from "./NewOrder";
+import NewProduct from "./NewProduct";
 import ProductsList from "./ProductsList";
-import SearchBar from "./SearchBar";
 
 function HomePage() {
   return (
@@ -8,6 +9,8 @@ function HomePage() {
       <Header />
       <main className="relative">
         <ProductsList />
+        <NewProduct />
+        <NewOrder />
       </main>
     </>
   );

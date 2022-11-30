@@ -16,17 +16,17 @@ function Navigation() {
         <MdShoppingBag size={"24px"} />
         <small>Productos</small>
       </NavLink>
-      <NavLink path="/tienda">
+      <NavLink path="/cart">
         <MdShoppingCart size={"24px"} />
-        <small>Tienda</small>
+        <small>Cart</small>
       </NavLink>
-      <NavLink path="/lista">
+      <NavLink path="/list">
         <MdFormatListBulleted size={"24px"} />
         <small>Lista</small>
       </NavLink>
-      <NavLink path="/mercado">
+      <NavLink path="/settings">
         <MdOutlineBarChart size={"24px"} />
-        <small>Mercado</small>
+        <small>Settings</small>
       </NavLink>
     </nav>
   );

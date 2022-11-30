@@ -1,6 +1,6 @@
+import ContextProvider from "../context/ContextProvider";
 import "../styles/globals.css";
-import Navigation from "./components/Navigation";
-import ContextProvider from "./utils/contextProvider";
+import Navigation from "./shared/Navigation";
 
 export default function RootLayout({
   children,

@@ -1,7 +1,17 @@
-import Button from "../components/Button";
-import { MdPayments, MdOutlineSell, MdPriceCheck } from "react-icons/md";
+"use client";
+
+import Button from "../shared/Button";
+import { MdPayments } from "react-icons/md";
+import { useContext } from "react";
+import { ProductContext } from "../../states/contexts/ProductContext";
 
 function Header() {
+  // const  = useContext(ProductContext)
+  // ------------- FUNCTIONS -------------
+  const makePayment = () => {
+    alert("payment made");
+  };
+  // ------------- JSX -------------
   return (
     <header className="header-style">
       <div className="grid w-10 h-10 font-semibold text-purple-800 rotate-45 bg-purple-300 rounded-sm place-items-center">
@@ -9,7 +19,7 @@ function Header() {
       </div>
       <div className="flex items-center space-x-2">
         <p className="font-semibold text-green-900">$ 32.50</p>
-        <Button shape={"square"} execute={"openOrderModal"}>
+        <Button shape={"square"} execute={makePayment}>
           <MdPayments size={"24px"} />
         </Button>
       </div>
