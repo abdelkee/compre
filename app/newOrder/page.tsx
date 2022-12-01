@@ -7,32 +7,42 @@ import {
   MdRemove,
   MdSpellcheck,
 } from "react-icons/md";
-import { useState, useContext } from "react";
-import Modal from "./shared/Modal";
-import { useDispatch, useSelector } from "../context/ContextHook";
-import { Actions } from "../context/ContextProvider";
+import { useState } from "react";
+import { useDispatch, useSelector } from "../../context/ContextHook";
+import { Actions } from "../../context/ContextProvider";
+import Modal from "../shared/Modal";
+import { useRouter } from "next/navigation";
 
-function NewOrder() {
-  const { isNewOrderOpen } = useSelector();
+const NewOrder = () => {
+  const router = useRouter();
+  // ---- CONTEXT
+  const { isNewOrderOpen, orderedProduct } = useSelector();
   const dispatch = useDispatch();
-  const [price, setPrice] = useState(0);
+
+  // ---- STATES
+  const [price, setPrice] = useState(orderedProduct?.price);
   const [quantity, setQuantity] = useState(1);
   const [note, setNote] = useState("");
-  const createOrder = (e: React.FormEvent<HTMLFormElement>) => {
+
+  // --- FUNCTIONS
+  function createOrder(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch({ type: Actions.setNewOrderOpen, payload: false });
-  };
-  const decrement = () => {
+    //! add product to db
+    router.back();
+  }
+  function decrement() {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
-  };
-  const increment = () => {
+  }
+  function increment() {
     setQuantity((prev) => prev + 1);
-  };
-  const setIsNewOrderOpen = () => {
-    dispatch({ type: Actions.setNewOrderOpen, payload: false });
-  };
+  }
+  function setIsNewOrderOpen() {
+    router.back();
+  }
+
+  // ---- JSX
   return (
     <Modal
       title="New Order"
@@ -50,7 +60,7 @@ function NewOrder() {
             <input
               type={"text"}
               readOnly
-              value={"Roscas"}
+              value={orderedProduct?.title}
               className="w-full h-full py-3 text-white bg-transparent focus:outline-none"
             />
           </label>
@@ -81,7 +91,7 @@ function NewOrder() {
               value={price}
               placeholder="Price..."
               className="input-field"
-              onChange={() => {}}
+              onChange={(e) => setPrice(parseFloat(e.target.value))}
             />
           </label>
           {/* ----------------- NOTE INPUT ------------------ */}
@@ -104,6 +114,6 @@ function NewOrder() {
       </form>
     </Modal>
   );
-}
+};
 
 export default NewOrder;

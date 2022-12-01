@@ -2,15 +2,12 @@
 
 import Button from "../shared/Button";
 import { MdPayments } from "react-icons/md";
-import { useContext } from "react";
-import { ProductContext } from "../../states/contexts/ProductContext";
 
-function Header() {
-  // const  = useContext(ProductContext)
+const Header = () => {
   // ------------- FUNCTIONS -------------
-  const makePayment = () => {
+  function makePayment() {
     alert("payment made");
-  };
+  }
   // ------------- JSX -------------
   return (
     <header className="header-style">
@@ -25,6 +22,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

@@ -5,20 +5,18 @@ import { MdAdd } from "react-icons/md";
 // ------------- local import -------------
 import Button from "./shared/Button";
 import SearchBar from "./SearchBar";
-import { useDispatch } from "../context/ContextHook";
-import { Actions } from "../context/ContextProvider";
+import { useRouter } from "next/navigation";
 
 function Header() {
-  const dispatch = useDispatch();
+  const router = useRouter();
   // ------------- FUNCTIONS -------------
   const openProductModal = () => {
-    dispatch({ type: Actions.setNewProductOpen, payload: true });
+    router.push("/newProduct");
   };
   // ------------- JSX -------------
   return (
     <header className="header-style">
       <SearchBar />
-
       <Button shape="square" execute={openProductModal}>
         <MdAdd size={"24px"} />
       </Button>

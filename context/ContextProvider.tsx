@@ -1,35 +1,41 @@
 "use client";
 
 import { createContext, ReactNode, useReducer } from "react";
+import { ProductType } from "../types";
 
 export enum Actions {
-  "setNewProductOpen",
-  "setNewOrderOpen",
+  "setOrderedProduct",
+  "setEditMode",
 }
 
+type InitialStateType = {
+  orderedProduct: ProductType | null;
+  editMode: boolean;
+};
+
 const initialState = {
-  isNewProductOpen: false,
-  isNewOrderOpen: false,
+  orderedProduct: null,
+  editMode: false,
 };
 
 type ActionType =
-  | { type: Actions.setNewProductOpen; payload: boolean }
-  | { type: Actions.setNewOrderOpen; payload: boolean };
+  | { type: Actions.setOrderedProduct; payload: ProductType }
+  | { type: Actions.setEditMode; payload: boolean };
 
-const ContextState = createContext<typeof initialState>(initialState);
+const ContextState = createContext<InitialStateType>(initialState);
 const ContextDispatch = createContext<(action: ActionType) => void>(() => {});
 
-const productReducer = (state: typeof initialState, action: ActionType) => {
+const productReducer = (state: InitialStateType, action: ActionType) => {
   switch (action.type) {
-    case Actions.setNewProductOpen:
+    case Actions.setOrderedProduct:
       return {
         ...state,
-        isNewProductOpen: action.payload,
+        orderedProduct: action.payload,
       };
-    case Actions.setNewOrderOpen:
+    case Actions.setEditMode:
       return {
         ...state,
-        isNewOrderOpen: action.payload,
+        editMode: action.payload,
       };
     default:
       return state;

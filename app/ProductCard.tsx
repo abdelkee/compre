@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { MdAddShoppingCart, MdModeEditOutline } from "react-icons/md";
 import { useDispatch } from "../context/ContextHook";
 import { Actions } from "../context/ContextProvider";
@@ -8,12 +9,18 @@ import { ProductType } from "../types";
 import Button from "./shared/Button";
 
 function ProductCard({ product }: { product: ProductType }) {
+  const router = useRouter();
   const dispatch = useDispatch();
   // ------------- FUNCTIONS -------------
   const openOrderModal = () => {
-    dispatch({ type: Actions.setNewOrderOpen, payload: true });
+    dispatch({ type: Actions.setOrderedProduct, payload: product });
+    router.push("/newOrder");
   };
-  const openEditModal = () => {};
+  const openEditModal = () => {
+    dispatch({ type: Actions.setOrderedProduct, payload: product });
+    dispatch({ type: Actions.setEditMode, payload: true });
+    router.push("/newProduct");
+  };
   // ------------- JSX -------------
   return (
     <div className="relative overflow-hidden bg-white border border-gray-300 rounded shadow-md">

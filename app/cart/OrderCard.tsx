@@ -6,15 +6,12 @@ import { OrderType } from "../../types";
 
 function OrderCard({ order }: { order: OrderType }) {
   // ------------- FUNCTIONS -------------
-  const openOrderModal = () => {
-    alert("order modal opened");
-  };
-  const openEditModal = () => {
+  function openEditModal() {
     alert("edit modal opened");
-  };
+  }
   // ------------- JSX -------------
   return (
-    <div className="overflow-hidden bg-white border border-gray-300 rounded shadow-md relative p-4">
+    <div className="relative p-4 overflow-hidden bg-white border border-gray-300 rounded shadow-md">
       order
     </div>
   );

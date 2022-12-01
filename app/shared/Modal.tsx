@@ -1,16 +1,13 @@
 import { ReactNode } from "react";
 import { MdOutlineClose } from "react-icons/md";
-import Button from "./Button";
 
 type ModalProps = {
   children: ReactNode;
   title: string;
-  isOpen: boolean;
   onClose: Function;
 };
 
-function Modal({ children, title, isOpen, onClose }: ModalProps) {
-  if (!isOpen) return null;
+function Modal({ children, title, onClose }: ModalProps) {
   return (
     <>
       <div className="fixed inset-0 z-40 grid w-screen h-screen bg-black/30 backdrop-blur-sm place-items-center">
