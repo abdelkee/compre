@@ -1,17 +1,16 @@
 import { use } from "react";
 import { ProductType } from "../types";
 import ProductCard from "./ProductCard";
-
-const api = "https://fakestoreapi.com/products";
+import { supabase } from "../utils/initSupabase";
 
 async function getProducts() {
-  const result = await fetch(api);
-  const data = await result.json();
-  return data;
+  let { data: products, error } = await supabase.from("products").select();
+  return { products, error };
 }
 
 function ProductsList() {
-  const products = use(getProducts());
+  const { products, error } = use(getProducts());
+  if (error) throw new Error("Something went wrong!");
   return (
     <section className="grid grid-cols-2 gap-4">
       {products?.map((product: ProductType) => (

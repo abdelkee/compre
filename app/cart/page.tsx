@@ -1,7 +1,7 @@
 import Header from "./Header";
 import OrdersList from "./OrdersList";
 
-function page() {
+function CartPage() {
   return (
     <>
       <Header />
@@ -12,4 +12,4 @@ function page() {
   );
 }
 
-export default page;
+export default CartPage;

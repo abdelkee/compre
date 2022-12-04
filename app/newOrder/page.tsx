@@ -8,16 +8,14 @@ import {
   MdSpellcheck,
 } from "react-icons/md";
 import { useState } from "react";
-import { useDispatch, useSelector } from "../../context/ContextHook";
-import { Actions } from "../../context/ContextProvider";
+import { useSelector } from "../../context/ContextHook";
 import Modal from "../shared/Modal";
 import { useRouter } from "next/navigation";
 
-const NewOrder = () => {
+const NewOrderPage = () => {
   const router = useRouter();
   // ---- CONTEXT
-  const { isNewOrderOpen, orderedProduct } = useSelector();
-  const dispatch = useDispatch();
+  const { orderedProduct } = useSelector();
 
   // ---- STATES
   const [price, setPrice] = useState(orderedProduct?.price);
@@ -44,11 +42,7 @@ const NewOrder = () => {
 
   // ---- JSX
   return (
-    <Modal
-      title="New Order"
-      isOpen={isNewOrderOpen}
-      onClose={setIsNewOrderOpen}
-    >
+    <Modal title="New Order" onClose={setIsNewOrderOpen}>
       <form
         onSubmit={createOrder}
         className="flex flex-col items-center justify-between w-full h-full"
@@ -116,4 +110,4 @@ const NewOrder = () => {
   );
 };
 
-export default NewOrder;
+export default NewOrderPage;
