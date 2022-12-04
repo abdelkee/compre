@@ -9,11 +9,13 @@ async function getProducts() {
 }
 
 function ProductsList() {
+  const { data: products, error } = use(getProducts());
+  if (error) throw new Error("error getting products");
   return (
     <section className="grid grid-cols-2 gap-4">
-      {/* {products?.map((product: ProductType) => (
+      {products?.map((product: ProductType) => (
         <ProductCard key={product.id} product={product} />
-      ))} */}
+      ))}
       this is sparta
     </section>
   );
