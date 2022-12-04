@@ -16,7 +16,6 @@ function ProductsList() {
       {products?.map((product: ProductType) => (
         <ProductCard key={product.id} product={product} />
       ))}
-      this is sparta
     </section>
   );
 }

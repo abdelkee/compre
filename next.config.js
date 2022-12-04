@@ -2,6 +2,6 @@
 module.exports = {
   experimental: { appDir: true },
   images: {
-    domains: ["fakestoreapi.com"],
+    domains: ["exgqcqdbjjdllndxzmze.supabase.co"],
   },
 };
