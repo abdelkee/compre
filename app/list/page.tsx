@@ -1,14 +1,15 @@
 import Header from "./Header";
+import ItemsList from "./ItemsList";
 
-function page() {
+function ListPage() {
   return (
     <>
       <Header />
       <main>
-        <li>nice</li>
+        <ItemsList />
       </main>
     </>
   );
 }
 
-export default page;
+export default ListPage;

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, ReactNode, useReducer } from "react";
-import { ProductType } from "../types";
+import { ItemType, ProductType } from "../types";
 
 export enum Actions {
   "setOrderedProduct",

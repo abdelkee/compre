@@ -23,3 +23,10 @@ export type OrderType = {
         count: number
     }
 }
+
+export type ItemType = {
+    id: string
+    title: string
+    category: 'Food' | 'Cleaning' | 'Medicine' | 'Other'
+    isChecked: boolean
+}

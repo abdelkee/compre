@@ -6,7 +6,9 @@ import { MdPayments } from "react-icons/md";
 const Header = () => {
   // ------------- FUNCTIONS -------------
   function makePayment() {
-    alert("payment made");
+    if (confirm("Make the payment?")) {
+      alert("payment made successfully");
+    }
   }
   // ------------- JSX -------------
   return (

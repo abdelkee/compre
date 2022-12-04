@@ -12,7 +12,6 @@ async function getOrders() {
 
 function OrdersList() {
   const orders = use(getOrders());
-  console.log(orders);
   return (
     <section className="grid grid-cols-1 gap-4">
       {orders?.map((order: OrderType) => (

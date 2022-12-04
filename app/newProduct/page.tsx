@@ -6,12 +6,14 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "../../context/ContextHook";
 import Modal from "../shared/Modal";
 import { useRouter } from "next/navigation";
+import { Actions } from "../../context/ContextProvider";
 
-const NewProduct = () => {
+const NewProductPage = () => {
   const router = useRouter();
 
   // ---- CONTEXT
   const { editMode, orderedProduct } = useSelector();
+  const dispatch = useDispatch();
 
   // ---- STATES
   const [image, setImage] = useState(!editMode ? "" : orderedProduct?.image);
@@ -19,6 +21,7 @@ const NewProduct = () => {
   const [price, setPrice] = useState(!editMode ? 0 : orderedProduct?.price);
   const closeModal = () => {
     router.back();
+    dispatch({ type: Actions.setEditMode, payload: false });
   };
 
   // ---- FUNCTIONS
@@ -31,6 +34,7 @@ const NewProduct = () => {
     e.preventDefault();
     //! update product in db
     router.back();
+    dispatch({ type: Actions.setEditMode, payload: false });
   }
 
   // ---- JSX
@@ -101,4 +105,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default NewProductPage;
