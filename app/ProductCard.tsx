@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MdAddShoppingCart, MdModeEditOutline } from "react-icons/md";
 import { useDispatch } from "../context/ContextHook";
-import { Actions } from "../context/ContextProvider";
+import { Actions } from "../context/reducers/productReducer";
 import { ProductType } from "../types";
 import Button from "./shared/Button";
 

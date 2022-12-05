@@ -11,7 +11,7 @@ function Header() {
   const router = useRouter();
   // ------------- FUNCTIONS -------------
   const openProductModal = () => {
-    router.push("/newProduct");
+    router.replace("/newProduct");
   };
   // ------------- JSX -------------
   return (
