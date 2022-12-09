@@ -1,27 +1,33 @@
-"use client";
+import { use } from "react";
+import { supabase } from "../../utils/initSupabase";
+import { OrderType } from "../../types";
+import HeaderContent from "./HeaderContent";
+import { useUser } from "../../context/ContextHook";
 
-import Button from "../shared/Button";
-import { MdPayments } from "react-icons/md";
-
+const getOrders = async () => {
+  const { data: orders, error } = await supabase.from("orders").select();
+  return { orders, error };
+};
 const Header = () => {
-  // ------------- FUNCTIONS -------------
-  function makePayment() {
-    if (confirm("Make the payment?")) {
-      alert("payment made successfully");
-    }
-  }
-  // ------------- JSX -------------
+  const { orders, error } = use(getOrders());
+  if (error) throw error.message;
+  if (orders === null || orders.length <= 0)
+    return <div className="grid place-items-center pt-4">No orders yet !</div>;
+  const prices: number[] = orders?.map((order: OrderType) => order.price);
+  const quantities: number[] = orders?.map(
+    (order: OrderType) => order.quantity
+  );
+  const totalPrice: number = parseFloat(
+    prices?.reduce((sum, price) => sum + price, 0).toFixed(2)
+  );
+  const totalQuantity: number = quantities?.reduce(
+    (sum, quantity) => sum + quantity,
+    0
+  );
+
   return (
     <header className="header-style">
-      <div className="grid w-10 h-10 font-semibold text-purple-800 rotate-45 bg-purple-300 rounded-sm place-items-center">
-        <p className="-rotate-45">20</p>
-      </div>
-      <div className="flex items-center space-x-2">
-        <p className="font-semibold text-green-900">$ 32.50</p>
-        <Button shape={"square"} execute={makePayment}>
-          <MdPayments size={"24px"} />
-        </Button>
-      </div>
+      <HeaderContent totalPrice={totalPrice} totalQuantity={totalQuantity} />
     </header>
   );
 };

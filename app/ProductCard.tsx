@@ -10,7 +10,7 @@ import Button from "./shared/Button";
 
 function ProductCard({ product }: { product: ProductType }) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch().productContext;
   // ------------- FUNCTIONS -------------
   const openOrderModal = () => {
     dispatch({ type: Actions.setOrderedProduct, payload: product });
@@ -27,7 +27,7 @@ function ProductCard({ product }: { product: ProductType }) {
       <Button shape="circle" execute={openEditModal}>
         <MdModeEditOutline size={"20px"} />
       </Button>
-      <div className="w-full h-[160px] overflow-hidden p-1">
+      <div className="w-full h-[140px] overflow-hidden p-1">
         <Image
           alt={product.title}
           src={product.image}

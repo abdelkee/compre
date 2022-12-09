@@ -2,24 +2,50 @@
 
 import { createContext, ReactNode, useReducer } from "react";
 import {
-  ActionType,
-  initialState,
-  InitialStateType,
+  CartActionType,
+  cartReducer,
+  initialCartState,
+  InitialCartStateType,
+} from "./reducers/cartReducer";
+import {
+  initialProductState,
+  InitialProductStateType,
+  ProductActionType,
   productReducer,
 } from "./reducers/productReducer";
 
-const ContextState = createContext<InitialStateType>(initialState);
-const ContextDispatch = createContext<(action: ActionType) => void>(() => {});
+const ProductContextState =
+  createContext<InitialProductStateType>(initialProductState);
+const ProductContextDispatch = createContext<
+  (action: ProductActionType) => void
+>(() => {});
+const CartContextState = createContext<InitialCartStateType>(initialCartState);
+const CartContextDispatch = createContext<(action: CartActionType) => void>(
+  () => {}
+);
 
 export default function ContextProvider({ children }: { children: ReactNode }) {
-  const [productState, dispatch] = useReducer(productReducer, initialState);
+  const [productState, productDispatch] = useReducer(
+    productReducer,
+    initialProductState
+  );
+  const [cartState, cartDispatch] = useReducer(cartReducer, initialCartState);
   return (
-    <ContextState.Provider value={productState}>
-      <ContextDispatch.Provider value={dispatch}>
-        {children}
-      </ContextDispatch.Provider>
-    </ContextState.Provider>
+    <ProductContextState.Provider value={productState}>
+      <ProductContextDispatch.Provider value={productDispatch}>
+        <CartContextState.Provider value={cartState}>
+          <CartContextDispatch.Provider value={cartDispatch}>
+            {children}
+          </CartContextDispatch.Provider>
+        </CartContextState.Provider>
+      </ProductContextDispatch.Provider>
+    </ProductContextState.Provider>
   );
 }
 
-export { ContextState, ContextDispatch };
+export {
+  ProductContextState,
+  ProductContextDispatch,
+  CartContextState,
+  CartContextDispatch,
+};

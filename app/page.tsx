@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../utils/initSupabase";
 import Header from "./Header";
 import ProductsList from "./ProductsList";
 
 export const revalidate = 0;
 
-function HomePage() {
+const ProductsPage = () => {
   return (
     <>
       <Header />
@@ -12,6 +14,6 @@ function HomePage() {
       </main>
     </>
   );
-}
+};
 
-export default HomePage;
+export default ProductsPage;

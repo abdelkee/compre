@@ -15,7 +15,7 @@ function ProductsList() {
   const { products, error } = use(getProducts());
   if (error) throw new Error("error getting products");
   return (
-    <section className="grid grid-cols-2 gap-4">
+    <section className="grid grid-cols-2 gap-2">
       {products?.map((product: ProductType) => (
         <ProductCard key={product.id} product={product} />
       ))}

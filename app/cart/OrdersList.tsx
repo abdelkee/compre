@@ -1,17 +1,16 @@
 import { use } from "react";
 import { OrderType } from "../../types";
+import { supabase } from "../../utils/initSupabase";
 import OrderCard from "./OrderCard";
 
-const api = "https://fakestoreapi.com/carts";
-
 async function getOrders() {
-  const result = await fetch(api);
-  const data = await result.json();
-  return data;
+  const { data, error } = await supabase.from("orders").select();
+  return { data, error };
 }
 
 function OrdersList() {
-  const orders = use(getOrders());
+  const { data: orders, error } = use(getOrders());
+  if (error) throw new Error("error getting orders");
   return (
     <section className="grid grid-cols-1 gap-4">
       {orders?.map((order: OrderType) => (

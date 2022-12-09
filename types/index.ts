@@ -12,16 +12,12 @@ export type ProductType = {
 }
 
 export type OrderType = {
-    id: number,
+    id: string,
     title: string
     price: number,
-    description: string
-    category: string
-    image: string
-    rating: {
-        rate: number,
-        count: number
-    }
+    quantity: number,
+    note: string,
+    created_at: string
 }
 
 export type ItemType = {

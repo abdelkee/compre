@@ -5,21 +5,21 @@ export enum Actions {
     "setEditMode",
 }
 
-export type InitialStateType = {
+export type InitialProductStateType = {
     orderedProduct: ProductType | null;
     editMode: boolean;
 };
 
-export const initialState = {
+export const initialProductState = {
     orderedProduct: null,
     editMode: false,
 };
 
-export type ActionType =
+export type ProductActionType =
     | { type: Actions.setOrderedProduct; payload: ProductType }
     | { type: Actions.setEditMode; payload: boolean };
 
-export const productReducer = (state: InitialStateType, action: ActionType) => {
+export const productReducer = (state: InitialProductStateType, action: ProductActionType) => {
     switch (action.type) {
         case Actions.setOrderedProduct:
             return {

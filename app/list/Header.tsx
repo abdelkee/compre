@@ -2,8 +2,10 @@
 
 import Button from "../shared/Button";
 import { MdPlaylistAdd, MdRemoveDone } from "react-icons/md";
+import { useUser } from "../../context/ContextHook";
 
 function Header() {
+  const { session } = useUser();
   // ------------- FUNCTIONS -------------
   const openItemModal = () => {
     alert("item modal opened");
@@ -11,6 +13,7 @@ function Header() {
   const clearCheckedItems = () => {
     alert("checked items cleared");
   };
+  if (session === null) return <div>No session</div>;
   // ------------- JSX -------------
   return (
     <header className="header-style">

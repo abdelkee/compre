@@ -3,18 +3,20 @@
 import { MdAttachMoney, MdImage, MdSpellcheck } from "react-icons/md";
 import { useState } from "react";
 import Image from "next/image";
-import { useDispatch, useSelector } from "../../context/ContextHook";
+import { useDispatch, useSelector, useUser } from "../../context/ContextHook";
 import Modal from "../shared/Modal";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../utils/initSupabase";
+import toast from "react-hot-toast";
 import { Actions } from "../../context/reducers/productReducer";
 
 const NewProductPage = () => {
   const router = useRouter();
-
+  const { session } = useUser();
+  if (session === null) return <div>No session</div>;
   // ---- CONTEXT
-  const { editMode, orderedProduct } = useSelector();
-  const dispatch = useDispatch();
+  const { editMode, orderedProduct } = useSelector().productContext;
+  const dispatch = useDispatch().productContext;
   // ---- STATES
   const [image, setImage] = useState<string | undefined>(
     !editMode ? "" : orderedProduct?.image
@@ -26,6 +28,7 @@ const NewProductPage = () => {
   const [price, setPrice] = useState<number | undefined>(
     !editMode ? 0 : orderedProduct?.price
   );
+  const [loading, setLoading] = useState(false);
   // ---- FUNCTIONS
   function closeModal() {
     router.replace("/");
@@ -34,10 +37,11 @@ const NewProductPage = () => {
 
   async function createProduct(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
     const { data: fileSource, error } = await supabase.storage
       .from("products")
       .upload(("img" + file?.name) as string, file as File);
-    if (error) throw new Error("error uploading the image");
+    if (error) throw new Error("error uploading image" + error.message);
     if (fileSource) {
       const {
         data: { publicUrl },
@@ -49,16 +53,17 @@ const NewProductPage = () => {
           image: publicUrl,
         },
       ]);
-      if (error) throw new Error("error creating the product");
+      if (error) throw new Error("error creating product " + error.message);
+      setLoading(false);
       router.replace("/");
     }
   }
-  async function editProduct(e: React.FormEvent<HTMLFormElement>) {
+  async function updateProduct(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const { error } = await supabase
       .from("products")
-      .update({ title })
+      .update({ title, price })
       .eq("id", orderedProduct?.id);
 
     if (error) throw new Error("error updating product");
@@ -73,7 +78,7 @@ const NewProductPage = () => {
       onClose={closeModal}
     >
       <form
-        onSubmit={!editMode ? createProduct : editProduct}
+        onSubmit={!editMode ? createProduct : updateProduct}
         className="flex flex-col items-center justify-between w-full h-full"
       >
         <div className="w-full space-y-6">
@@ -134,9 +139,16 @@ const NewProductPage = () => {
         </div>
         <button
           type="submit"
-          className="w-full py-3 font-semibold text-green-600 bg-white rounded"
+          disabled={loading}
+          className={`w-full py-3 font-semibold rounded ${
+            loading ? "text-gray-600 bg-gray-300" : "text-green-600 bg-white"
+          }`}
         >
-          {!editMode ? "Create product" : "Update product"}
+          {!loading
+            ? !editMode
+              ? "Create product"
+              : "Update product"
+            : "Submitting..."}
         </button>
       </form>
     </Modal>

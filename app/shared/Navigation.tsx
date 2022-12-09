@@ -11,7 +11,7 @@ import NavLink from "./NavLink";
 
 function Navigation() {
   return (
-    <nav className="fixed bottom-0 flex items-center justify-around w-full bg-white border-t border-t-gray-400">
+    <nav className="fixed bottom-0 flex items-center justify-around w-full max-w-md bg-white border-t border-t-gray-400">
       <NavLink path="/">
         <MdShoppingBag size={"24px"} />
         <small>Productos</small>

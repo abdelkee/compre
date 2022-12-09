@@ -10,7 +10,6 @@ function ItemsList() {
       {/* {items?.map((item: ItemType) => (
         <ItemPill key={item.id} item={item} />
       ))} */}
-      this is sparti
     </section>
   );
 }

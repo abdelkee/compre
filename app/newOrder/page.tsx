@@ -8,25 +8,41 @@ import {
   MdSpellcheck,
 } from "react-icons/md";
 import { useState } from "react";
-import { useSelector } from "../../context/ContextHook";
+import { useSelector, useUser } from "../../context/ContextHook";
 import Modal from "../shared/Modal";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../utils/initSupabase";
 
 const NewOrderPage = () => {
   const router = useRouter();
+  const { session } = useUser();
+  if (session === null) return <div>No session</div>;
   // ---- CONTEXT
-  const { orderedProduct } = useSelector();
+  const { orderedProduct } = useSelector().productContext;
 
   // ---- STATES
   const [price, setPrice] = useState(orderedProduct?.price);
   const [quantity, setQuantity] = useState(1);
   const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // --- FUNCTIONS
-  function createOrder(e: React.FormEvent<HTMLFormElement>) {
+  async function createOrder(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //! add product to db
-    router.back();
+    setLoading(true);
+    try {
+      await supabase.from("orders").insert({
+        title: orderedProduct?.title,
+        price,
+        quantity,
+        note,
+      });
+      router.replace("/cart");
+    } catch (error) {
+      throw new Error("error creating order");
+    } finally {
+      setLoading(false);
+    }
   }
   function decrement() {
     if (quantity > 1) {
@@ -95,15 +111,18 @@ const NewOrderPage = () => {
               type="text"
               placeholder="Note..."
               className="input-field"
-              onChange={() => {}}
+              onChange={(e) => setNote(e.target.value)}
             />
           </label>
         </div>
         <button
           type="submit"
-          className="w-full py-3 font-semibold text-green-600 bg-white rounded"
+          disabled={loading}
+          className={`w-full py-3 font-semibold ${
+            loading ? "text-gray-600 bg-gray-300" : "text-green-600 bg-white"
+          } rounded`}
         >
-          Make order
+          {!loading ? "Make order" : "Submiting..."}
         </button>
       </form>
     </Modal>
