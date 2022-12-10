@@ -6,7 +6,10 @@ export enum Actions {
 }
 
 export type InitialProductStateType = {
-    orderedProduct: ProductType | null;
+    orderedProduct: {
+        product: ProductType
+        quantity: number
+    } | null;
     editMode: boolean;
 };
 
@@ -16,7 +19,7 @@ export const initialProductState = {
 };
 
 export type ProductActionType =
-    | { type: Actions.setOrderedProduct; payload: ProductType }
+    | { type: Actions.setOrderedProduct; payload: InitialProductStateType['orderedProduct'] }
     | { type: Actions.setEditMode; payload: boolean };
 
 export const productReducer = (state: InitialProductStateType, action: ProductActionType) => {

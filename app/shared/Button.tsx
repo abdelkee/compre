@@ -19,7 +19,7 @@ function Button({ children, shape, disabled = false, execute }: ButtonProps) {
           : shape === "long"
           ? "w-full rounded-sm border-b-4 border-b-green-800 py-2 bg-green-600"
           : shape === "none"
-          ? "w-11 rounded-full h-11 bg-transparent"
+          ? "w-11 rounded-full h-11 bg-transparent text-purple-600"
           : shape === "circle"
           ? `w-8 rounded-full h-8 bg-gray-50 opacity-90 text-purple-500 absolute top-1 left-1`
           : "w-full py-2 bg-purple-600 border border-gray-300"

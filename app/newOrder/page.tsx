@@ -22,8 +22,7 @@ const NewOrderPage = () => {
   const { orderedProduct } = useSelector().productContext;
 
   // ---- STATES
-  const [price, setPrice] = useState(orderedProduct?.price);
-  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(orderedProduct?.product.price);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -33,9 +32,9 @@ const NewOrderPage = () => {
     setLoading(true);
     try {
       await supabase.from("orders").insert({
-        title: orderedProduct?.title,
+        title: orderedProduct?.product.title,
         price,
-        quantity,
+        quantity: orderedProduct?.quantity,
         note,
       });
       router.replace("/cart");
@@ -44,14 +43,6 @@ const NewOrderPage = () => {
     } finally {
       setLoading(false);
     }
-  }
-  function decrement() {
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-    }
-  }
-  function increment() {
-    setQuantity((prev) => prev + 1);
   }
   function setIsNewOrderOpen() {
     router.back();
@@ -67,33 +58,18 @@ const NewOrderPage = () => {
         >
           <div className="w-full space-y-6">
             {/* ----------------- TITLE INPUT ------------------ */}
-            <label className="flex items-center w-full px-2 space-x-4 text-gray-400 border-b border-b-gray-400">
+            <label className="relative flex items-center w-full px-2 space-x-4 text-gray-400 border-b border-b-gray-400">
               <MdSpellcheck size={"24px"} />
               <input
                 type={"text"}
                 readOnly
-                value={orderedProduct?.title}
+                value={orderedProduct?.product.title}
                 className="w-full h-full py-3 text-white bg-transparent focus:outline-none"
               />
+              <p className="absolute top-0 right-0 grid w-8 h-8 font-semibold text-white bg-orange-400 rounded-full place-items-center">
+                6
+              </p>
             </label>
-            {/* ----------------- QUANTITY ------------------ */}
-            <div className="flex items-center justify-center space-x-6 text-white">
-              <button
-                type="button"
-                className="grid w-8 h-8 text-lg font-semibold rounded-full place-items-center"
-                onClick={() => decrement()}
-              >
-                <MdRemove size="24px" />
-              </button>
-              <p className="text-xl font-semibold">{quantity}</p>
-              <button
-                type="button"
-                className="grid w-8 h-8 text-lg font-semibold rounded-full place-items-center"
-                onClick={() => increment()}
-              >
-                <MdAdd size="24px" />
-              </button>
-            </div>
             {/* ----------------- PRICE INPUT ------------------ */}
             <label className="input-label">
               <MdAttachMoney size={"24px"} />

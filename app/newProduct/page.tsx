@@ -22,14 +22,14 @@ const NewProductPage = () => {
 
   //! ---- STATES
   const [image, setImage] = useState<string | undefined>(
-    !editMode ? "" : orderedProduct?.image
+    !editMode ? "" : orderedProduct?.product.image
   );
   const [file, setFile] = useState<File>();
   const [title, setTitle] = useState<string | undefined>(
-    !editMode ? "" : orderedProduct?.title
+    !editMode ? "" : orderedProduct?.product.title
   );
   const [price, setPrice] = useState<number | undefined>(
-    !editMode ? 0 : orderedProduct?.price
+    !editMode ? 0 : orderedProduct?.product.price
   );
   const [loading, setLoading] = useState(false);
 
@@ -68,7 +68,7 @@ const NewProductPage = () => {
     const { error } = await supabase
       .from("products")
       .update({ title, price })
-      .eq("id", orderedProduct?.id);
+      .eq("id", orderedProduct?.product.id);
 
     if (error) throw new Error("error updating product");
     router.replace("/");

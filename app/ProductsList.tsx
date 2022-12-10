@@ -18,7 +18,7 @@ function ProductsList() {
       });
   }, []);
   return (
-    <section className="grid grid-cols-2 gap-2">
+    <section className="grid grid-cols-2 gap-3">
       {products?.map((product: ProductType) => (
         <ProductCard key={product.id} product={product} />
       ))}

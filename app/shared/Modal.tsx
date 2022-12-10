@@ -11,7 +11,7 @@ function Modal({ children, title, onClose }: ModalProps) {
   return (
     <>
       <div className="fixed inset-0 z-40 grid w-screen h-screen bg-black/30 backdrop-blur-sm place-items-center">
-        <div className="flex flex-col w-11/12 h-3/4 max-w-[400px] relative bg-green-900 rounded shadow-md p-6">
+        <div className="flex flex-col w-11/12 h-3/4 max-w-[400px] relative bg-gradient-to-b from-green-800 to-green-900 rounded shadow-md p-6">
           <button
             className="absolute text-white top-4 right-4"
             onClick={() => onClose()}
