@@ -12,11 +12,10 @@ function OrderCard({ order }: { order: OrderType }) {
   // ------------- JSX -------------
   return (
     <div
-      className="relative pr-2 overflow-hidden bg-white border border-pink-500 rounded shadow-md flex space-x-4"
+      className="relative flex px-3 space-x-4 overflow-hidden bg-white border border-l-8 border-pink-500 rounded shadow-md border-l-pink-500"
       onClick={deleteOrder}
     >
-      <div className="h-full w-1 bg-pink-500" />
-      <div className="flex-1 py-3 flex justify-between items-center font-semibold">
+      <div className="flex items-center justify-between flex-1 py-3 font-semibold">
         <div className="flex items-center space-x-4">
           <p>{order.quantity}</p>
           <div>

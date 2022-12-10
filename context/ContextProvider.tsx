@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, ReactNode, useReducer } from "react";
+import {
+  createContext,
+  ReactNode,
+  useReducer,
+  useEffect,
+  useState,
+} from "react";
+import { OrderType } from "../types";
+import { supabase } from "../utils/initSupabase";
 import {
   CartActionType,
   cartReducer,
@@ -19,33 +27,20 @@ const ProductContextState =
 const ProductContextDispatch = createContext<
   (action: ProductActionType) => void
 >(() => {});
-const CartContextState = createContext<InitialCartStateType>(initialCartState);
-const CartContextDispatch = createContext<(action: CartActionType) => void>(
-  () => {}
-);
 
 export default function ContextProvider({ children }: { children: ReactNode }) {
   const [productState, productDispatch] = useReducer(
     productReducer,
     initialProductState
   );
-  const [cartState, cartDispatch] = useReducer(cartReducer, initialCartState);
+
   return (
     <ProductContextState.Provider value={productState}>
       <ProductContextDispatch.Provider value={productDispatch}>
-        <CartContextState.Provider value={cartState}>
-          <CartContextDispatch.Provider value={cartDispatch}>
-            {children}
-          </CartContextDispatch.Provider>
-        </CartContextState.Provider>
+        {children}
       </ProductContextDispatch.Provider>
     </ProductContextState.Provider>
   );
 }
 
-export {
-  ProductContextState,
-  ProductContextDispatch,
-  CartContextState,
-  CartContextDispatch,
-};
+export { ProductContextState, ProductContextDispatch };

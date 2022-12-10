@@ -19,8 +19,7 @@ function ProductsHeader() {
   };
   // ------------- JSX -------------
   return (
-    <header className="header-style">
-      <SearchBar />
+    <header className="flex-row-reverse header-style">
       <Button shape="square" execute={openProductModal}>
         <MdAdd size={"24px"} />
       </Button>

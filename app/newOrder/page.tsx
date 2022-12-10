@@ -21,8 +21,9 @@ const NewOrderPage = () => {
   // ---- CONTEXT
   const { orderedProduct } = useSelector().productContext;
 
+  const initPrice = orderedProduct?.product.price! * orderedProduct?.quantity!;
   // ---- STATES
-  const [price, setPrice] = useState(orderedProduct?.product.price);
+  const [price, setPrice] = useState<number>(parseFloat(initPrice.toFixed(2)));
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
 

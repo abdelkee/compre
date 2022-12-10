@@ -1,27 +1,22 @@
-import { use, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { supabase } from "../../utils/initSupabase";
 import { OrderType } from "../../types";
 import HeaderContent from "./HeaderContent";
-import { useUser } from "../../context/ContextHook";
+import { useSelector, useUser } from "../../context/ContextHook";
 
-// const getOrders = async () => {
-//   const { data: orders, error } = await supabase.from("orders").select();
-//   return { orders, error };
-// };
 const CartHeader = () => {
-  // const { orders, error } = use(getOrders());
-  // const [ordersResume, setOrdersResume] = useState({
-  //   totalPrice: 0,
-  //   totalQuantity: 0,
-  // });
-  // supabase
-  //   .from("orders")
-  //   .select()
-  //   .then(({ data: orders, error }) => {
-  //     if (error) throw error.message;
+  const [totalPrice, setTotalPrice] = useState(12.2);
+  const [totalQuantity, setTotalQuantity] = useState(4);
+  useEffect(() => {
+    supabase.rpc("get_priceSum").then((res) => {
+      console.log(res);
+    });
+  }, []);
   //     if (orders === null || orders.length <= 0)
   //       return (
-  //         <div className="grid place-items-center pt-4">No orders yet !</div>
+  //         <div className="grid pt-4 place-items-center">No orders yet !</div>
   //       );
   //     const prices: number[] = orders?.map((order: OrderType) => order.price);
   //     const quantities: number[] = orders?.map(
@@ -42,10 +37,7 @@ const CartHeader = () => {
 
   return (
     <header className="header-style">
-      <HeaderContent
-      // totalPrice={ordersResume.totalPrice}
-      // totalQuantity={ordersResume.totalQuantity}
-      />
+      <HeaderContent totalPrice={totalPrice} totalQuantity={totalQuantity} />
     </header>
   );
 };

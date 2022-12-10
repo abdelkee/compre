@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSelector } from "../../context/ContextHook";
 import { OrderType } from "../../types";
 import { supabase } from "../../utils/initSupabase";
 import OrderCard from "./OrderCard";
 
 function OrdersList() {
   const [orders, setOrders] = useState<OrderType[]>([]);
+
   useEffect(() => {
     supabase
       .from("orders")
       .select()
       .then(({ data, error }) => {
-        if (error) throw new Error("error getting orders");
+        if (error) throw error.message;
         setOrders(data);
       });
   }, []);

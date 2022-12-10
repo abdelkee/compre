@@ -126,7 +126,7 @@ const NewProductPage = () => {
                 type="text"
                 value={title}
                 placeholder="Title..."
-                className="input-field"
+                className="capitalize input-field"
                 onChange={(e) => setTitle(e.target.value)}
               />
             </label>

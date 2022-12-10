@@ -39,7 +39,7 @@ function ProductCard({ product }: { product: ProductType }) {
   };
   // ------------- JSX -------------
   return (
-    <div className="relative overflow-hidden bg-white border border-gray-200 rounded-md shadow-md">
+    <div className="relative z-10 overflow-hidden bg-white border border-gray-200 rounded-md shadow-md">
       <Button shape="circle" execute={openEditModal}>
         <MdModeEditOutline size={"20px"} />
       </Button>
@@ -65,7 +65,7 @@ function ProductCard({ product }: { product: ProductType }) {
           >
             -
           </button>
-          <p className="grid w-8 h-8 text-center text-purple-600 rounded-full place-items-center">
+          <p className="grid w-8 h-8 text-center text-purple-800 rounded-full place-items-center">
             {quantity}
           </p>
           <button
