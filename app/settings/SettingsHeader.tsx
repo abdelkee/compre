@@ -7,12 +7,12 @@ import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 
 const SettingsHeader = () => {
+  const router = useRouter();
+  const { user } = useUser();
   const [profile, setProfile] = useState({
     username: "",
     avatar: "/placeholder.png",
   });
-  const router = useRouter();
-  const { user } = useUser();
 
   useEffect(() => {
     supabase
@@ -25,6 +25,7 @@ const SettingsHeader = () => {
         setProfile(data);
       });
   }, []);
+
   async function logout() {
     const { error } = await supabase.auth.signOut();
     if (error) throw error.message;

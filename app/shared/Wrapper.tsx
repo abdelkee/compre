@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useUser } from "../../context/ContextHook";
 
 function Wrapper({ children }: { children: ReactNode }) {

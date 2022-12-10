@@ -1,30 +1,26 @@
 "use client";
 
-import { use, useState } from "react";
+import { useEffect, useState } from "react";
 import { OrderType } from "../../types";
 import { supabase } from "../../utils/initSupabase";
 import OrderCard from "./OrderCard";
 
-// async function getOrders() {
-//   const { data, error } = await supabase.from("orders").select();
-//   return { data, error };
-// }
-
 function OrdersList() {
-  // const { data: orders, error } = use(getOrders());
-  // const [orders, setOrders] = useState<OrderType[]>([]);
-  // supabase
-  //   .from("orders")
-  //   .select()
-  //   .then(({ data: orders, error }) => {
-  //     if (error) throw new Error("error getting orders");
-  //     setOrders(orders);
-  //   });
+  const [orders, setOrders] = useState<OrderType[]>([]);
+  useEffect(() => {
+    supabase
+      .from("orders")
+      .select()
+      .then(({ data, error }) => {
+        if (error) throw new Error("error getting orders");
+        setOrders(data);
+      });
+  }, []);
   return (
     <section className="grid grid-cols-1 gap-4">
-      {/* {orders?.map((order: OrderType) => (
+      {orders?.map((order: OrderType) => (
         <OrderCard key={order.id} order={order} />
-      ))} */}
+      ))}
     </section>
   );
 }

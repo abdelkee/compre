@@ -13,7 +13,10 @@ import { supabase } from "../utils/initSupabase";
 export const AuthContext = createContext<{
   user: User | null;
   session: Session | null;
-}>({ user: null, session: null });
+}>({
+  user: null,
+  session: null,
+});
 
 export default function AuthContextProvider({
   children,
@@ -22,6 +25,7 @@ export default function AuthContextProvider({
 }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
+
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
