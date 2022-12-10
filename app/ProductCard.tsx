@@ -57,19 +57,19 @@ function ProductCard({ product }: { product: ProductType }) {
         <p className="capitalize truncate">{product.title}</p>
         <p>$ {product.price}</p>
       </section>
-      <section className="flex justify-between pl-1 mx-1 mb-2 bg-purple-600 rounded-full shadow-sm">
-        <div className="flex items-center font-semibold text-white">
+      <section className="flex justify-between pl-2 mx-1 mb-1 border border-purple-100 rounded-md shadow-sm bg-purple-50">
+        <div className="flex items-center font-semibold text-purple-800 text-md">
           <button
-            className="grid w-8 h-8 bg-purple-300 rounded-full place-items-center"
+            className="grid w-8 h-8 border rounded-full place-items-center broder-purple-100"
             onClick={decrement}
           >
             -
           </button>
-          <p className="grid w-8 h-8 text-center rounded-full place-items-center">
+          <p className="grid w-8 h-8 text-center text-purple-600 rounded-full place-items-center">
             {quantity}
           </p>
           <button
-            className="grid w-8 h-8 bg-purple-300 rounded-full place-items-center"
+            className="grid w-8 h-8 border rounded-full place-items-center broder-purple-100"
             onClick={increment}
           >
             +

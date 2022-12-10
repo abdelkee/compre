@@ -67,7 +67,7 @@ const NewOrderPage = () => {
                 className="w-full h-full py-3 text-white bg-transparent focus:outline-none"
               />
               <p className="absolute top-0 right-0 grid w-8 h-8 font-semibold text-white bg-orange-400 rounded-full place-items-center">
-                6
+                {orderedProduct?.quantity}
               </p>
             </label>
             {/* ----------------- PRICE INPUT ------------------ */}
