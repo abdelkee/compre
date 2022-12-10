@@ -1,18 +1,31 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useUser } from "../../context/ContextHook";
 import { OrderType } from "../../types";
+import { supabase } from "../../utils/initSupabase";
 
-function OrderCard({ order }: { order: OrderType }) {
+const OrderCard = ({ order }: { order: OrderType }) => {
+  const { user } = useUser();
+  const router = useRouter();
   // ------------- FUNCTIONS -------------
-  function deleteOrder() {
+  async function deleteOrder() {
     if (confirm("Want to delete this order")) {
-      alert("order deleted");
+      const { error } = await supabase
+        .from("orders")
+        .delete()
+        .eq("id", order.id)
+        .eq("user_id", user?.id);
+      if (error) return toast.error(error.message);
+      toast.success("order deleted successfully");
+      router.replace("/cart");
     }
   }
   // ------------- JSX -------------
   return (
     <div
-      className="relative flex px-3 space-x-4 overflow-hidden bg-white border border-l-8 border-pink-500 rounded shadow-md border-l-pink-500"
+      className="relative flex px-3 space-x-4 overflow-hidden bg-white border border-l-4 border-indigo-500 rounded shadow-md border-l-indigo-500"
       onClick={deleteOrder}
     >
       <div className="flex items-center justify-between flex-1 py-3 font-semibold">
@@ -32,6 +45,6 @@ function OrderCard({ order }: { order: OrderType }) {
       </div>
     </div>
   );
-}
+};
 
 export default OrderCard;

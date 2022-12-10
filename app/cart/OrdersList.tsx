@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSelector } from "../../context/ContextHook";
+import { Toaster } from "react-hot-toast";
 import { OrderType } from "../../types";
 import { supabase } from "../../utils/initSupabase";
 import OrderCard from "./OrderCard";
@@ -19,11 +19,14 @@ function OrdersList() {
       });
   }, []);
   return (
-    <section className="grid grid-cols-1 gap-4">
-      {orders?.map((order: OrderType) => (
-        <OrderCard key={order.id} order={order} />
-      ))}
-    </section>
+    <>
+      <Toaster key={"cart"} />
+      <section className="grid grid-cols-1 gap-4">
+        {orders?.map((order: OrderType) => (
+          <OrderCard key={order.id} order={order} />
+        ))}
+      </section>
+    </>
   );
 }
 

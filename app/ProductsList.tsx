@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ProductType } from "../types";
 import ProductCard from "./ProductCard";
 import { supabase } from "../utils/initSupabase";
+import { Toaster } from "react-hot-toast";
 
 function ProductsList() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -12,6 +13,7 @@ function ProductsList() {
     supabase
       .from("products")
       .select()
+      .order("title")
       .then(({ data, error }) => {
         if (error) throw error.message;
         setProducts(data);

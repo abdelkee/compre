@@ -16,7 +16,7 @@ import Wrapper from "../shared/Wrapper";
 
 const NewOrderPage = () => {
   const router = useRouter();
-  const { session } = useUser();
+  const { session, user } = useUser();
   if (session === null) return null;
   // ---- CONTEXT
   const { orderedProduct } = useSelector().productContext;
@@ -37,6 +37,7 @@ const NewOrderPage = () => {
         price,
         quantity: orderedProduct?.quantity,
         note,
+        user_id: user?.id,
       });
       router.replace("/cart");
     } catch (error) {

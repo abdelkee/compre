@@ -1,13 +1,22 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { MdPayments } from "react-icons/md";
-import { useUser } from "../../context/ContextHook";
+import { supabase } from "../../utils/initSupabase";
 import Button from "../shared/Button";
 
 const HeaderContent = ({ totalPrice = 0, totalQuantity = 0.0 }) => {
-  function makePayment() {
+  const router = useRouter();
+  async function makePayment() {
     if (confirm("Make the payment?")) {
-      alert("payment made successfully");
+      const { error } = await supabase
+        .from("orders")
+        .delete()
+        .neq("title", "as");
+      if (error) return toast.error(error.message);
+      toast.success("Payment made successfully!");
+      router.replace("/cart");
     }
   }
   return (
