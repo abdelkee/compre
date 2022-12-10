@@ -25,7 +25,17 @@ const Login = () => {
     setLoading(false);
   }
 
-  if (session !== null) return <Link href={"/"}>Go to homepage</Link>;
+  if (session !== null)
+    return (
+      <main className="grid font-semibold text-green-700 place-items-center">
+        <Link
+          href={"/"}
+          className="px-6 py-3 bg-white border border-green-700 rounded shadow-md active:opacity-70 active:shadow-none"
+        >
+          GO TO HOMEPAGE
+        </Link>
+      </main>
+    );
 
   return (
     <main>

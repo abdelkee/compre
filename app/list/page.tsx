@@ -1,14 +1,15 @@
-import Header from "./Header";
+import Wrapper from "../shared/Wrapper";
 import ItemsList from "./ItemsList";
+import ListHeader from "./ListHeader";
 
 function ListPage() {
   return (
-    <>
-      <Header />
+    <Wrapper>
+      <ListHeader />
       <main>
         <ItemsList />
       </main>
-    </>
+    </Wrapper>
   );
 }
 

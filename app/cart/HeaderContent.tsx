@@ -5,8 +5,8 @@ import { useUser } from "../../context/ContextHook";
 import Button from "../shared/Button";
 
 const HeaderContent = ({ totalPrice = 0, totalQuantity = 0.0 }) => {
-  const { session } = useUser();
-  if (session === null) return <div>No session</div>;
+  // const { session } = useUser();
+  // if (session === null) return <div>No session</div>;
   function makePayment() {
     if (confirm("Make the payment?")) {
       alert("payment made successfully");

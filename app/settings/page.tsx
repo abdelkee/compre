@@ -1,13 +1,12 @@
-import Header from "./Header";
+import Wrapper from "../shared/Wrapper";
+import SettingsHeader from "./SettingsHeader";
 
 function page() {
   return (
-    <>
-      <Header />
-      <main>
-        <li>great</li>
-      </main>
-    </>
+    <Wrapper>
+      <SettingsHeader />
+      <main></main>
+    </Wrapper>
   );
 }
 

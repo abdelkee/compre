@@ -1,3 +1,5 @@
+"use client";
+
 // library imports
 import {
   MdShoppingBag,
@@ -5,11 +7,17 @@ import {
   MdFormatListBulleted,
   MdOutlineBarChart,
 } from "react-icons/md";
+import { useUser } from "../../context/ContextHook";
 import NavLink from "./NavLink";
+import { usePathname } from "next/navigation";
 
 // local imports
 
 function Navigation() {
+  const path = usePathname();
+  const { session } = useUser();
+  if (session === null) return null;
+  if (path === "/login") return null;
   return (
     <nav className="fixed bottom-0 flex items-center justify-around w-full max-w-md bg-white border-t border-t-gray-400">
       <NavLink path="/">

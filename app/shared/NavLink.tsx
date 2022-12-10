@@ -11,7 +11,7 @@ type NavLinkProps = {
 
 function NavLink({ children, path }: NavLinkProps) {
   const pathname = usePathname();
-  const { session, user } = useUser();
+  // const { session, user } = useUser();
   return (
     <li
       className={`py-3 list-none bg-inherit flex-1 grid place-items-center ${
@@ -20,12 +20,7 @@ function NavLink({ children, path }: NavLinkProps) {
           : "text-gray-300"
       }`}
     >
-      <Link
-        href={path}
-        className={`grid place-items-center ${
-          session === null && "pointer-events-none"
-        }`}
-      >
+      <Link href={path} className={`grid place-items-center `}>
         {children}
       </Link>
     </li>

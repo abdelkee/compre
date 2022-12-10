@@ -1,7 +1,5 @@
-import { use } from "react";
-import ContextProvider from "../context/ContextProvider";
 import "../styles/globals.css";
-import { supabase } from "../utils/initSupabase";
+import ContextProvider from "../context/ContextProvider";
 import Navigation from "./shared/Navigation";
 import AuthContextProvider from "../context/AuthContextProvider";
 

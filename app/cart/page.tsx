@@ -1,15 +1,16 @@
-import Header from "./Header";
+import Wrapper from "../shared/Wrapper";
+import CartHeader from "./CartHeader";
 import OrdersList from "./OrdersList";
 export const revalidate = 0;
 
 function CartPage() {
   return (
-    <>
-      <Header />
+    <Wrapper>
+      <CartHeader />
       <main>
         <OrdersList />
       </main>
-    </>
+    </Wrapper>
   );
 }
 

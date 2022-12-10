@@ -8,16 +8,11 @@ import SearchBar from "./SearchBar";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/ContextHook";
 import Link from "next/link";
+import { supabase } from "../utils/initSupabase";
 
-function Header() {
-  const { session, user } = useUser();
+function ProductsHeader() {
   const router = useRouter();
-  if (session === null)
-    return (
-      <div>
-        No session <Link href={"/login"}>SIGN IN</Link>
-      </div>
-    );
+  // const { session } = useUser();
   // ------------- FUNCTIONS -------------
   const openProductModal = () => {
     router.replace("/newProduct");
@@ -33,4 +28,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default ProductsHeader;
