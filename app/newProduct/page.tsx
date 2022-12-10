@@ -12,11 +12,11 @@ import { Actions } from "../../context/reducers/productReducer";
 import Wrapper from "../shared/Wrapper";
 
 const NewProductPage = () => {
+  //! ---- HOOKS
   const router = useRouter();
   const { session } = useUser();
   if (session === null) return null;
 
-  //! ---- CONTEXT
   const { editMode, orderedProduct } = useSelector().productContext;
   const dispatch = useDispatch().productContext;
 
@@ -38,38 +38,46 @@ const NewProductPage = () => {
     router.replace("/");
     dispatch({ type: Actions.setEditMode, payload: false });
   }
-
-  async function createProduct(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
+  async function uploadImage() {
     const { data: fileSource, error } = await supabase.storage
       .from("products")
       .upload(("img" + file?.name) as string, file as File);
     if (error) throw new Error("error uploading image" + error.message);
-    if (fileSource) {
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("products").getPublicUrl(fileSource.path);
-      const { error } = await supabase.from("products").insert([
-        {
-          title,
-          price,
-          image: publicUrl,
-        },
-      ]);
-      if (error) throw new Error("error creating product " + error.message);
+    return fileSource;
+  }
+  async function getPublicUrl(path: string) {
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("products").getPublicUrl(path);
+    return publicUrl;
+  }
+  async function insertProduct(publicUrl: string) {
+    const { error } = await supabase.from("products").insert([
+      {
+        title,
+        price,
+        image: publicUrl,
+      },
+    ]);
+    if (error) throw new Error("error creating product " + error.message);
+  }
+  async function createProduct(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    const { path } = await uploadImage();
+    if (path) {
+      const publicUrl = await getPublicUrl(path);
+      await insertProduct(publicUrl);
       setLoading(false);
       router.replace("/");
     }
   }
   async function updateProduct(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     const { error } = await supabase
       .from("products")
       .update({ title, price })
       .eq("id", orderedProduct?.product.id);
-
     if (error) throw new Error("error updating product");
     router.replace("/");
     dispatch({ type: Actions.setEditMode, payload: false });
@@ -97,6 +105,8 @@ const NewProductPage = () => {
                   className="object-cover rounded-2xl ring-2 ring-white aspect-square"
                 />
                 <input
+                  readOnly={editMode}
+                  disabled={editMode}
                   type="file"
                   className="absolute invisible"
                   onChange={(e) => {
@@ -110,6 +120,8 @@ const NewProductPage = () => {
                 <MdImage size="24px" />
                 <p>Product image</p>
                 <input
+                  readOnly={editMode}
+                  disabled={editMode}
                   type="file"
                   className="absolute invisible"
                   onChange={(e) => {
