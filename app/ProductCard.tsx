@@ -19,7 +19,7 @@ function ProductCard({ product }: { product: ProductType }) {
       type: Actions.setOrderedProduct,
       payload: { product, quantity },
     });
-    router.push("/newOrder");
+    dispatch({ type: Actions.setIsOrderFormOpen, payload: true });
   };
   const openEditModal = () => {
     dispatch({
@@ -27,7 +27,7 @@ function ProductCard({ product }: { product: ProductType }) {
       payload: { product, quantity },
     });
     dispatch({ type: Actions.setEditMode, payload: true });
-    router.push("/newProduct");
+    dispatch({ type: Actions.setIsOrderFormOpen, payload: true });
   };
   const decrement = () => {
     if (quantity > 1) {

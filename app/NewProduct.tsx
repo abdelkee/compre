@@ -35,7 +35,6 @@ const NewProductPage = () => {
 
   //* ---- FUNCTIONS
   function closeModal() {
-    router.replace("/");
     dispatch({ type: Actions.setEditMode, payload: false });
     dispatch({ type: Actions.setIsProductFormOpen, payload: false });
   }

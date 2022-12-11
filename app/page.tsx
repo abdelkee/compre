@@ -1,3 +1,4 @@
+import NewOrderPage from "./NewOrder";
 import NewProductPage from "./NewProduct";
 import ProductsHeader from "./ProductsHeader";
 import ProductsList from "./ProductsList";
@@ -13,6 +14,7 @@ const ProductsPage = () => {
         <ProductsList />
       </main>
       <NewProductPage />
+      <NewOrderPage />
     </Wrapper>
   );
 };
