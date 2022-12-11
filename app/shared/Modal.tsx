@@ -5,9 +5,11 @@ type ModalProps = {
   children: ReactNode;
   title: string;
   onClose: Function;
+  isOpen?: boolean;
 };
 
-function Modal({ children, title, onClose }: ModalProps) {
+function Modal({ children, title, onClose, isOpen = false }: ModalProps) {
+  if (!isOpen) return null;
   return (
     <>
       <div className="fixed inset-0 z-50 grid w-screen h-screen bg-black/30 backdrop-blur-sm place-items-center">

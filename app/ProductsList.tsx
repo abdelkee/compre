@@ -20,12 +20,12 @@ function ProductsList() {
       });
   }, []);
 
-  const filteredProducts = products.filter((product) =>
+  const filteredProducts = products?.filter((product) =>
     product.title.toLowerCase().includes(searchedVal.toLowerCase())
   );
   return (
     <>
-      <section className="fixed z-50 w-3/4 top-3">
+      <section className="fixed z-30 w-3/4 top-3">
         <input
           type="text"
           className="w-full h-full px-2 py-3 capitalize border border-gray-300 rounded-sm focus:outline-none focus:ring focus:ring-blue-300"

@@ -1,3 +1,4 @@
+import NewProductPage from "./NewProduct";
 import ProductsHeader from "./ProductsHeader";
 import ProductsList from "./ProductsList";
 import Wrapper from "./shared/Wrapper";
@@ -11,6 +12,7 @@ const ProductsPage = () => {
       <main className="relative">
         <ProductsList />
       </main>
+      <NewProductPage />
     </Wrapper>
   );
 };
