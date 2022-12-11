@@ -1,4 +1,3 @@
-import { OrderType } from "../../types";
 
 export enum Actions {
     "setTotalPrice",

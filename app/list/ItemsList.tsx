@@ -1,16 +1,30 @@
-import { use } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { ItemType } from "../../types";
-import { supabase } from "../../utils/initSupabase";
 import ItemPill from "./ItemPill";
-export const dynamic = "force-dynamic";
 
 function ItemsList() {
+  //* STATES
+  const [itemPills, setItemPills] = useState<ItemType[]>([]);
+
+  useEffect(() => {
+    const value = localStorage.getItem("itemPills");
+    if (typeof value === "string") {
+      const parse = JSON.parse(value);
+      setItemPills(parse);
+    } else {
+      localStorage.setItem("itemPills", JSON.stringify([]));
+    }
+  }, []);
   return (
-    <section className="flex flex-wrap gap-4">
-      {/* {items?.map((item: ItemType) => (
-        <ItemPill key={item.id} item={item} />
-      ))} */}
-    </section>
+    <>
+      <section className="flex flex-wrap gap-4">
+        {itemPills?.map((item: ItemType) => (
+          <ItemPill key={item.id} item={item} />
+        ))}
+      </section>
+    </>
   );
 }
 

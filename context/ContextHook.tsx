@@ -2,16 +2,23 @@
 
 import { useContext } from "react";
 import { AuthContext } from "./AuthContextProvider";
-import { ProductContextDispatch, ProductContextState } from "./ContextProvider";
+import {
+  ListContextDispatch,
+  ListContextState,
+  ProductContextDispatch,
+  ProductContextState,
+} from "./ContextProvider";
 
 export const useSelector = () => {
   return {
     productContext: useContext(ProductContextState),
+    listContext: useContext(ListContextState),
   };
 };
 export const useDispatch = () => {
   return {
     productContext: useContext(ProductContextDispatch),
+    ListContext: useContext(ListContextDispatch),
   };
 };
 

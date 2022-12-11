@@ -2,19 +2,21 @@
 
 import Button from "../shared/Button";
 import { MdPlaylistAdd, MdRemoveDone } from "react-icons/md";
-import { useUser } from "../../context/ContextHook";
+import { useDispatch } from "../../context/ContextHook";
+import { Actions } from "../../context/reducers/listReducer";
 
 function ListHeader() {
-  // const { session } = useUser();
-  // ------------- FUNCTIONS -------------
+  //* ---- HOOKS
+  const dispatch = useDispatch().ListContext;
+  //* ---- STATE
+  //* ---- FUNCTIONS
   const openItemModal = () => {
-    alert("item modal opened");
+    dispatch({ type: Actions.setIsItemFormOpen, payload: true });
   };
   const clearCheckedItems = () => {
     alert("checked items cleared");
   };
-  // if (session === null) return <div>No session</div>;
-  // ------------- JSX -------------
+  //* ---- JSX
   return (
     <header className="header-style">
       <Button shape="square" execute={clearCheckedItems}>

@@ -1,11 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ItemType } from "../../types";
-import { supabase } from "../../utils/initSupabase";
 
 const ItemPill = ({ item }: { item: ItemType }) => {
   const router = useRouter();
+  const [checked, setChecked] = useState(false);
   function categorySelect() {
     switch (item.category) {
       case "Food":
@@ -19,23 +20,15 @@ const ItemPill = ({ item }: { item: ItemType }) => {
     }
   }
   async function toggleItem() {
-    const { data, error } = await supabase
-      .from("items")
-      .update({ isChecked: !item.isChecked })
-      .eq("id", item.id)
-      .select();
-    if (error) return alert("error");
-    if (data) {
-      router.refresh();
-    }
+    setChecked((prev) => !prev);
   }
   return (
     <div
       onClick={toggleItem}
-      className={`${categorySelect()} ${
-        item.isChecked
-          ? "line-through shadow-none border border-gray-300 text-gray-500 bg-gray-300"
-          : "shadow-sm bg-white"
+      className={`${
+        checked
+          ? "line-through shadow-none text-gray-500 bg-gray-100 border border-gray-300"
+          : `shadow-sm bg-white ${categorySelect()}`
       } py-2 grid place-items-center px-4 rounded-full font-semibold cursor-pointer`}
     >
       {item.title}

@@ -15,9 +15,8 @@ import Wrapper from "./shared/Wrapper";
 const NewProductPage = () => {
   //* ---- HOOKS
   const router = useRouter();
-  const { isProductFormOpen } = useSelector().productContext;
-
-  const { editMode, orderedProduct } = useSelector().productContext;
+  const { editMode, orderedProduct, isProductFormOpen } =
+    useSelector().productContext;
   const dispatch = useDispatch().productContext;
 
   //* ---- STATES
