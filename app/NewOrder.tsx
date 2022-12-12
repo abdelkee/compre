@@ -1,7 +1,7 @@
 "use client";
 
 import { MdAttachMoney, MdNoteAlt, MdSpellcheck } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector, useUser } from "../context/ContextHook";
 import Modal from "./shared/Modal";
@@ -16,10 +16,14 @@ const NewOrderPage = () => {
   const dispatch = useDispatch().productContext;
 
   //* ---- STATES
-  const initPrice = orderedProduct?.product.price! * orderedProduct?.quantity!;
-  const [price, setPrice] = useState<number>(parseFloat(initPrice.toFixed(2)));
+  const initPrice = orderedProduct.product.price * orderedProduct.quantity;
+  const [price, setPrice] = useState<number>(0);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setPrice(parseFloat(initPrice.toFixed(2)));
+  }, [orderedProduct]);
 
   //* --- FUNCTIONS
   async function createOrder(e: React.FormEvent<HTMLFormElement>) {
@@ -33,12 +37,12 @@ const NewOrderPage = () => {
         note,
         user_id: user?.id,
       });
-      router.replace("/cart");
     } catch (error) {
       throw new Error("error creating order");
     } finally {
       setLoading(false);
       dispatch({ type: Actions.setIsOrderFormOpen, payload: false });
+      router.replace("/cart");
     }
   }
   function closeModal() {

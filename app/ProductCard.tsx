@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { MdAddShoppingCart, MdModeEditOutline } from "react-icons/md";
 import { useState } from "react";
 import { useDispatch } from "../context/ContextHook";
@@ -10,7 +9,6 @@ import { ProductType } from "../types";
 import Button from "./shared/Button";
 
 function ProductCard({ product }: { product: ProductType }) {
-  const router = useRouter();
   const dispatch = useDispatch().productContext;
   const [quantity, setQuantity] = useState(1);
   // ------------- FUNCTIONS -------------
@@ -22,12 +20,12 @@ function ProductCard({ product }: { product: ProductType }) {
     dispatch({ type: Actions.setIsOrderFormOpen, payload: true });
   };
   const openEditModal = () => {
+    dispatch({ type: Actions.setEditMode, payload: true });
     dispatch({
       type: Actions.setOrderedProduct,
       payload: { product, quantity },
     });
-    dispatch({ type: Actions.setEditMode, payload: true });
-    dispatch({ type: Actions.setIsOrderFormOpen, payload: true });
+    dispatch({ type: Actions.setIsProductFormOpen, payload: true });
   };
   const decrement = () => {
     if (quantity > 1) {
@@ -49,12 +47,15 @@ function ProductCard({ product }: { product: ProductType }) {
           src={product.image}
           width="0"
           height="0"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="./blurPlaceholder.png"
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
         />
       </section>
       <section className="w-full p-2 font-medium">
-        <p className="capitalize truncate">{product.title}</p>
+        <p className="truncate">{product.title}</p>
         <p>$ {product.price}</p>
       </section>
       <section className="flex justify-between pl-2 mx-1 mb-1 border border-purple-100 rounded-md shadow-sm bg-purple-50">

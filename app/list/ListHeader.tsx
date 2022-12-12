@@ -18,10 +18,7 @@ function ListHeader() {
   };
   //* ---- JSX
   return (
-    <header className="header-style">
-      <Button shape="square" execute={clearCheckedItems}>
-        <MdRemoveDone size="24px" />
-      </Button>
+    <header className="header-style flex-row-reverse">
       <Button shape="square" execute={openItemModal}>
         <MdPlaylistAdd size="24px" />
       </Button>

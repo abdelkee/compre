@@ -1,11 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { useSelector } from "../../context/ContextHook";
 import { ItemType } from "../../types";
 import ItemPill from "./ItemPill";
 
 function ItemsList() {
-  //* STATES
+  //* ---- HOOKS
+  const { revalidateItemPills } = useSelector().listContext;
+
+  //* ---- STATES
   const [itemPills, setItemPills] = useState<ItemType[]>([]);
 
   useEffect(() => {
@@ -16,7 +21,7 @@ function ItemsList() {
     } else {
       localStorage.setItem("itemPills", JSON.stringify([]));
     }
-  }, []);
+  }, [revalidateItemPills]);
   return (
     <>
       <section className="flex flex-wrap gap-4">
@@ -24,6 +29,7 @@ function ItemsList() {
           <ItemPill key={item.id} item={item} />
         ))}
       </section>
+      <Toaster />
     </>
   );
 }

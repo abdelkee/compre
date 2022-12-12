@@ -32,6 +32,7 @@ const ItemPill = ({ item }: { item: ItemType }) => {
       } py-2 grid place-items-center px-4 rounded-full font-semibold cursor-pointer`}
     >
       {item.title}
+      {/* <p>-</p> */}
     </div>
   );
 };

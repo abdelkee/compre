@@ -4,24 +4,38 @@ export enum Actions {
     "setOrderedProduct",
     "setEditMode",
     "setIsProductFormOpen",
-    "setIsOrderFormOpen"
+    "setIsOrderFormOpen",
+    "setRevalidateProducts",
+    "setRevalidateOrders"
 }
 
 export type InitialProductStateType = {
     orderedProduct: {
         product: ProductType
         quantity: number
-    } | null;
+    };
     editMode: boolean;
     isProductFormOpen: boolean;
     isOrderFormOpen: boolean;
+    revalidateProducts: boolean
+    revalidateOrders: boolean
 };
 
 export const initialProductState = {
-    orderedProduct: null,
+    orderedProduct: {
+        product: {
+            id: '',
+            title: '',
+            price: 0,
+            image: ''
+        },
+        quantity: 1
+    },
     editMode: false,
     isProductFormOpen: false,
-    isOrderFormOpen: false
+    isOrderFormOpen: false,
+    revalidateProducts: false,
+    revalidateOrders: false
 };
 
 export type ProductActionType =
@@ -29,6 +43,8 @@ export type ProductActionType =
     | { type: Actions.setEditMode; payload: InitialProductStateType['editMode'] }
     | { type: Actions.setIsProductFormOpen; payload: InitialProductStateType['isProductFormOpen'] }
     | { type: Actions.setIsOrderFormOpen; payload: InitialProductStateType['isOrderFormOpen'] }
+    | { type: Actions.setRevalidateProducts }
+    | { type: Actions.setRevalidateOrders }
 
 export const productReducer = (state: InitialProductStateType, action: ProductActionType) => {
     switch (action.type) {
@@ -52,8 +68,17 @@ export const productReducer = (state: InitialProductStateType, action: ProductAc
                 ...state,
                 isOrderFormOpen: action.payload,
             };
+        case Actions.setRevalidateProducts:
+            return {
+                ...state,
+                revalidateProducts: !state.revalidateProducts,
+            };
+        case Actions.setRevalidateOrders:
+            return {
+                ...state,
+                revalidateOrders: !state.revalidateOrders,
+            };
         default:
             return state;
     }
 };
-

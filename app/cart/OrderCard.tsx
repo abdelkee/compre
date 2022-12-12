@@ -1,14 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useUser } from "../../context/ContextHook";
+import { useDispatch, useUser } from "../../context/ContextHook";
+import { Actions } from "../../context/reducers/productReducer";
 import { OrderType } from "../../types";
 import { supabase } from "../../utils/initSupabase";
 
 const OrderCard = ({ order }: { order: OrderType }) => {
   const { user } = useUser();
-  const router = useRouter();
+  const dispatch = useDispatch().productContext;
   // ------------- FUNCTIONS -------------
   async function deleteOrder() {
     if (confirm("Want to delete this order")) {
@@ -19,7 +19,7 @@ const OrderCard = ({ order }: { order: OrderType }) => {
         .eq("user_id", user?.id);
       if (error) return toast.error(error.message);
       toast.success("order deleted successfully");
-      router.replace("/cart");
+      dispatch({ type: Actions.setRevalidateOrders });
     }
   }
   // ------------- JSX -------------

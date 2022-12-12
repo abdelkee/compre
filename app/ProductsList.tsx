@@ -5,8 +5,13 @@ import { ProductType } from "../types";
 import ProductCard from "./ProductCard";
 import { supabase } from "../utils/initSupabase";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "../context/ContextHook";
 
 function ProductsList() {
+  //* ---- HOOKS
+  const { revalidateProducts } = useSelector().productContext;
+
+  //* ---- STATES
   const [products, setProducts] = useState<ProductType[]>([]);
   const [searchedVal, setSearchedVal] = useState<string>("");
   useEffect(() => {
@@ -18,11 +23,14 @@ function ProductsList() {
         if (error) throw error.message;
         setProducts(data);
       });
-  }, []);
+  }, [revalidateProducts]);
 
+  //* ---- FUNCTIONS
   const filteredProducts = products?.filter((product) =>
     product.title.toLowerCase().includes(searchedVal.toLowerCase())
   );
+
+  //* ---- JSX
   return (
     <>
       <section className="fixed z-30 w-3/4 top-3">
@@ -38,6 +46,7 @@ function ProductsList() {
           <ProductCard key={product.id} product={product} />
         ))}
       </section>
+      <Toaster />
     </>
   );
 }

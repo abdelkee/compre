@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "../../context/ContextHook";
 import { OrderType } from "../../types";
 import { supabase } from "../../utils/initSupabase";
 import OrderCard from "./OrderCard";
 
 function OrdersList() {
+  const { revalidateOrders } = useSelector().productContext;
   const [orders, setOrders] = useState<OrderType[]>([]);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ function OrdersList() {
         if (error) throw error.message;
         setOrders(data);
       });
-  }, []);
+  }, [revalidateOrders]);
   return (
     <>
       <Toaster key={"cart"} />

@@ -1,41 +1,47 @@
 "use client";
 
 import { MdAttachMoney, MdImage, MdSpellcheck } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector, useUser } from "../context/ContextHook";
+import { useDispatch, useSelector } from "../context/ContextHook";
 import Modal from "./shared/Modal";
 import { supabase } from "../utils/initSupabase";
 import { Actions } from "../context/reducers/productReducer";
-import Wrapper from "./shared/Wrapper";
+export const revalidate = 0;
 
 // ------ same page version ---------
 const NewProductPage = () => {
   //* ---- HOOKS
-  const router = useRouter();
   const { editMode, orderedProduct, isProductFormOpen } =
     useSelector().productContext;
   const dispatch = useDispatch().productContext;
 
   //* ---- STATES
-  const [image, setImage] = useState<string | undefined>(
-    !editMode ? "" : orderedProduct?.product.image
-  );
+  const initProduct = { id: "", title: "", price: 0, image: "" };
+  const [image, setImage] = useState<string | undefined>("");
   const [file, setFile] = useState<File>();
-  const [title, setTitle] = useState<string | undefined>(
-    !editMode ? "" : orderedProduct?.product.title
-  );
-  const [price, setPrice] = useState<number | undefined>(
-    !editMode ? 0 : orderedProduct?.product.price
-  );
+  const [title, setTitle] = useState<string | undefined>("");
+  const [price, setPrice] = useState<number | undefined>(0);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const { image: i, title: t, price: p } = orderedProduct.product;
+    if (editMode) {
+      setImage(i);
+      setTitle(t);
+      setPrice(p);
+    }
+  }, [orderedProduct]);
 
   //* ---- FUNCTIONS
   function closeModal() {
     dispatch({ type: Actions.setEditMode, payload: false });
     dispatch({ type: Actions.setIsProductFormOpen, payload: false });
+    dispatch({
+      type: Actions.setOrderedProduct,
+      payload: { product: initProduct, quantity: 1 },
+    });
   }
   async function uploadImage() {
     const { data: fileSource, error } = await supabase.storage
@@ -68,20 +74,23 @@ const NewProductPage = () => {
       const publicUrl = await getPublicUrl(path);
       await insertProduct(publicUrl);
       setLoading(false);
-      router.replace("/");
       dispatch({ type: Actions.setIsProductFormOpen, payload: false });
+      dispatch({ type: Actions.setRevalidateProducts });
+      toast.success("Product added successfully!");
     }
   }
   async function updateProduct(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
     const { error } = await supabase
       .from("products")
       .update({ title, price })
       .eq("id", orderedProduct?.product.id);
     if (error) throw new Error("error updating product");
-    router.replace("/");
+    setLoading(false);
     dispatch({ type: Actions.setEditMode, payload: false });
     dispatch({ type: Actions.setIsProductFormOpen, payload: false });
+    dispatch({ type: Actions.setRevalidateProducts });
   }
 
   //* ---- JSX
@@ -139,8 +148,13 @@ const NewProductPage = () => {
               type="text"
               value={title}
               placeholder="Title..."
-              className="capitalize input-field"
-              onChange={(e) => setTitle(e.target.value)}
+              className="input-field"
+              onChange={(e) =>
+                setTitle(
+                  e.target.value.charAt(0).toUpperCase() +
+                    e.target.value.slice(1)
+                )
+              }
             />
           </label>
           <label className="input-label">
