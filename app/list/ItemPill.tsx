@@ -3,10 +3,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ItemType } from "../../types";
+import { Actions } from "../../context/reducers/listReducer";
+import { useDispatch } from "../../context/ContextHook";
 
 const ItemPill = ({ item }: { item: ItemType }) => {
-  const router = useRouter();
-  const [checked, setChecked] = useState(false);
+  //* ---- HOOKS
+  const dispatch = useDispatch().ListContext;
+
+  //* ---- FUNCTIONS
   function categorySelect() {
     switch (item.category) {
       case "Food":
@@ -20,13 +24,24 @@ const ItemPill = ({ item }: { item: ItemType }) => {
     }
   }
   async function toggleItem() {
-    setChecked((prev) => !prev);
+    const result = localStorage.getItem("itemPills");
+    if (typeof result === "string") {
+      let pills = JSON.parse(result);
+      const updatedPills = pills.map((pill: ItemType) => {
+        if (pill.id === item.id) {
+          return { ...pill, checked: !item.checked };
+        }
+        return pill;
+      });
+      localStorage.setItem("itemPills", JSON.stringify(updatedPills));
+      dispatch({ type: Actions.setRevalidateItemPills });
+    }
   }
   return (
     <div
       onClick={toggleItem}
       className={`${
-        checked
+        item.checked
           ? "line-through shadow-none text-gray-500 bg-gray-100 border border-gray-300"
           : `shadow-sm bg-white ${categorySelect()}`
       } py-2 grid place-items-center px-4 rounded-full font-semibold cursor-pointer`}

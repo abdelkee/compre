@@ -40,10 +40,10 @@ function ProductsList() {
       <section
         className={`fixed z-30 w-3/4 top-3`}
         onFocus={() =>
-          dispatch({ type: Actions.setSearchIsFocused, payload: true })
+          dispatch({ type: Actions.setInputIsFocused, payload: true })
         }
         onBlur={() =>
-          dispatch({ type: Actions.setSearchIsFocused, payload: false })
+          dispatch({ type: Actions.setInputIsFocused, payload: false })
         }
       >
         <input

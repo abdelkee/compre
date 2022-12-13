@@ -18,7 +18,7 @@ function Button({
   return (
     <button
       onClick={() => execute()}
-      className={`grid place-items-center shrink-0 focus:active:opacity-80 focus:active:translate-y-0.5 focus:active:border-none ${
+      className={`grid place-items-center shrink-0 focus:active:opacity-80 focus:active:border-none ${
         shape === "square"
           ? "w-12 h-12 rounded-sm border-b-4 border-b-green-800 bg-green-600 text-white"
           : shape === "long"

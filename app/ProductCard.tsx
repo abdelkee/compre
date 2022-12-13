@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
   MdAddShoppingCart,
   MdClose,
+  MdFileUpload,
   MdModeEditOutline,
   MdUpdate,
 } from "react-icons/md";
@@ -40,7 +41,7 @@ function ProductCard({ product }: { product: ProductType }) {
       setTitle(product.title);
       setPrice(product.price);
     }
-    setIsEditMode((prev) => !prev);
+    setIsEditMode(!isEditMode);
   };
 
   const decrement = () => {
@@ -54,6 +55,8 @@ function ProductCard({ product }: { product: ProductType }) {
   };
 
   const updateProduct = async () => {
+    if (title === product.title && price === product.price)
+      return setIsEditMode(false);
     setLoading(true);
     try {
       if (title === "" || title.length < 3) {
@@ -79,7 +82,7 @@ function ProductCard({ product }: { product: ProductType }) {
 
   const handleBlur = (e: React.FocusEvent<HTMLDivElement, Element>) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
-      toggleEditMode();
+      setIsEditMode(false);
     }
   };
 
@@ -87,9 +90,9 @@ function ProductCard({ product }: { product: ProductType }) {
   return (
     <div
       onBlur={(e) => handleBlur(e)}
-      className={`relative z-10 overflow-hidden bg-white border border-gray-200 rounded-md ${
-        !isEditMode ? "shadow-md" : "shadow-lg scale-105"
-      }`}
+      className={` relative z-10 overflow-hidden bg-white border ${
+        isEditMode ? "border-green-400" : "border-gray-200"
+      } rounded-md ${!isEditMode ? "shadow-md" : "shadow-lg"}`}
     >
       <Button
         shape="circle"
@@ -102,7 +105,7 @@ function ProductCard({ product }: { product: ProductType }) {
           <MdClose size={"20px"} />
         )}
       </Button>
-      <section className="w-full h-[140px] overflow-hidden p-1 rounded-md">
+      <section className="w-full h-[140px] overflow-hidden p-1 rounded-md bg-white">
         <Image
           alt={product.title}
           src={product.image}
@@ -117,25 +120,45 @@ function ProductCard({ product }: { product: ProductType }) {
       </section>
 
       {/* //* ---- INFO SECTION */}
-      <section className="w-full p-2 font-medium space-y-1">
-        <input
-          type="text"
-          className={`truncate w-full focus:outline-none ${
-            isEditMode && "bg-green-50"
-          }`}
-          value={title}
-          readOnly={!isEditMode}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="number"
-          className={`truncate w-full focus:outline-none ${
-            isEditMode && "bg-green-50"
-          }`}
-          value={price}
-          readOnly={!isEditMode}
-          onChange={(e) => setPrice(parseFloat(e.target.value))}
-        />
+      <section className="w-full p-2 font-medium">
+        {isEditMode ? (
+          <input
+            type="text"
+            className={`truncate w-full focus:outline-none p-1 ${
+              isEditMode && "bg-green-50"
+            }`}
+            onFocus={() => {
+              dispatch({ type: Actions.setInputIsFocused, payload: true });
+            }}
+            onBlur={() => {
+              dispatch({ type: Actions.setInputIsFocused, payload: false });
+            }}
+            value={title}
+            readOnly={!isEditMode}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        ) : (
+          <div className="p-1">{product.title}</div>
+        )}
+        {isEditMode ? (
+          <input
+            type="number"
+            className={`truncate w-full focus:outline-none p-1 ${
+              isEditMode && "bg-green-50 border-t border-t-green-200"
+            }`}
+            onFocus={() => {
+              dispatch({ type: Actions.setInputIsFocused, payload: true });
+            }}
+            onBlur={() => {
+              dispatch({ type: Actions.setInputIsFocused, payload: false });
+            }}
+            value={price}
+            readOnly={!isEditMode}
+            onChange={(e) => setPrice(parseFloat(e.target.value))}
+          />
+        ) : (
+          <div className="p-1">{product.price}</div>
+        )}
       </section>
 
       {/* //* ---- CTA SECTION  */}
@@ -169,8 +192,10 @@ function ProductCard({ product }: { product: ProductType }) {
         >
           {!isEditMode ? (
             <MdAddShoppingCart size={"24px"} />
-          ) : (
+          ) : !loading ? (
             <MdUpdate size={"24px"} />
+          ) : (
+            <MdFileUpload className="text-purple-400" size={"24px"} />
           )}
         </Button>
       </section>

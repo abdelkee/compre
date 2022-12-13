@@ -13,12 +13,12 @@ import NavLink from "./NavLink";
 function Navigation() {
   const path = usePathname();
   const { session } = useUser();
-  const { searchIsFocused } = useSelector().productContext;
+  const { inputIsFocused } = useSelector().productContext;
   if (session === null) return null;
   if (path === "/login") return null;
   return (
     <>
-      {!searchIsFocused && (
+      {!inputIsFocused && (
         <nav className="fixed bottom-0 z-40 flex items-center justify-around w-full max-w-md bg-white border-t border-t-gray-400">
           <NavLink path="/">
             <MdShoppingBag size={"24px"} />

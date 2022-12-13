@@ -64,7 +64,7 @@ const NewItemPage = () => {
         onSubmit={addItem}
         className="flex flex-col items-center justify-between w-full h-full"
       >
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-10">
           {/* ---- TITLE INPUT */}
           <label className="input-label">
             <MdSpellcheck size={"24px"} />
@@ -79,7 +79,7 @@ const NewItemPage = () => {
           </label>
 
           {/* ---- CATEGORY RADIO INPUT */}
-          <div className="w-full h-auto flex justify-between">
+          <div className="w-full flex items-center justify-between">
             <CategoryRadio
               name={"Food"}
               val={category}
@@ -132,22 +132,20 @@ const CategoryRadio = ({
 }) => {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCategory(e.target.value);
-    console.log(e.target);
   }
   return (
-    <div className="flex flex-col space-y-2 overflow-hidden items-center">
+    <div className="flex flex-col space-y-2 items-center">
       <label
-        className={`w-16 h-w-16 rounded border-4 bg-white ${
-          val === name ? "border-yellow-400" : "border-gray-100"
+        className={`w-16 h-w-16 rounded border-4 bg-white overflow-hidden ${
+          val === name ? "border-yellow-400" : "border-transparent"
         }`}
       >
         <div className="w-full h-full bg-white">
           <Image
             alt="food"
             src={url}
-            width={64}
-            height={64}
-            sizes="100vw"
+            width={68}
+            height={68}
             className="rounded object-cover"
           />
         </div>
@@ -162,8 +160,10 @@ const CategoryRadio = ({
         />
       </label>
       <p
-        className={`text-white font-semibold ${
-          val === name && "border-b-2 border-b-yellow-400"
+        className={`text-white font-semibold w-full text-center ${
+          val === name
+            ? "border-b-2 border-b-yellow-400"
+            : "border-b-2 border-b-transparent"
         } `}
       >
         {name}
