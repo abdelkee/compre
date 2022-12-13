@@ -6,6 +6,7 @@ export enum Actions {
     "setIsOrderFormOpen",
     "setRevalidateProducts",
     "setRevalidateOrders",
+    "setSearchIsFocused"
 }
 
 export type InitialProductStateType = {
@@ -16,7 +17,8 @@ export type InitialProductStateType = {
     isProductFormOpen: boolean;
     isOrderFormOpen: boolean;
     revalidateProducts: boolean
-    revalidateOrders: boolean
+    revalidateOrders: boolean,
+    searchIsFocused: boolean
 };
 
 export const initialProductState = {
@@ -32,13 +34,15 @@ export const initialProductState = {
     isProductFormOpen: false,
     isOrderFormOpen: false,
     revalidateProducts: false,
-    revalidateOrders: false
+    revalidateOrders: false,
+    searchIsFocused: false
 };
 
 export type ProductActionType =
     | { type: Actions.setOrderedProduct; payload: InitialProductStateType['orderedProduct'] }
     | { type: Actions.setIsProductFormOpen; payload: InitialProductStateType['isProductFormOpen'] }
     | { type: Actions.setIsOrderFormOpen; payload: InitialProductStateType['isOrderFormOpen'] }
+    | { type: Actions.setSearchIsFocused; payload: InitialProductStateType['searchIsFocused'] }
     | { type: Actions.setRevalidateProducts }
     | { type: Actions.setRevalidateOrders }
 
@@ -68,6 +72,11 @@ export const productReducer = (state: InitialProductStateType, action: ProductAc
             return {
                 ...state,
                 revalidateOrders: !state.revalidateOrders,
+            };
+        case Actions.setSearchIsFocused:
+            return {
+                ...state,
+                searchIsFocused: action.payload,
             };
         default:
             return state;

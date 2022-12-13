@@ -73,7 +73,7 @@ const NewProductPage = () => {
     >
       <form
         onSubmit={createProduct}
-        className="flex flex-col items-center justify-between w-full h-full"
+        className="flex flex-col items-center justify-between w-full h-full overflow-y-scroll"
       >
         <div className="w-full space-y-6">
           {image ? (

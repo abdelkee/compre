@@ -10,12 +10,11 @@ type ModalProps = {
 };
 
 function Modal({ children, title, onClose, isOpen }: ModalProps) {
-  // if (!isOpen) return null;
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 grid w-screen h-screen bg-black/30 backdrop-blur-sm place-items-center"
