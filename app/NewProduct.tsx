@@ -13,35 +13,19 @@ export const revalidate = 0;
 // ------ same page version ---------
 const NewProductPage = () => {
   //* ---- HOOKS
-  const { editMode, orderedProduct, isProductFormOpen } =
-    useSelector().productContext;
+  const { orderedProduct, isProductFormOpen } = useSelector().productContext;
   const dispatch = useDispatch().productContext;
 
   //* ---- STATES
-  const initProduct = { id: "", title: "", price: 0, image: "" };
   const [image, setImage] = useState<string | undefined>("");
   const [file, setFile] = useState<File>();
   const [title, setTitle] = useState<string | undefined>("");
   const [price, setPrice] = useState<number | undefined>(0);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const { image: i, title: t, price: p } = orderedProduct.product;
-    if (editMode) {
-      setImage(i);
-      setTitle(t);
-      setPrice(p);
-    }
-  }, [orderedProduct]);
-
   //* ---- FUNCTIONS
   function closeModal() {
-    dispatch({ type: Actions.setEditMode, payload: false });
     dispatch({ type: Actions.setIsProductFormOpen, payload: false });
-    dispatch({
-      type: Actions.setOrderedProduct,
-      payload: { product: initProduct, quantity: 1 },
-    });
   }
   async function uploadImage() {
     const { data: fileSource, error } = await supabase.storage
@@ -79,29 +63,16 @@ const NewProductPage = () => {
       toast.success("Product added successfully!");
     }
   }
-  async function updateProduct(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase
-      .from("products")
-      .update({ title, price })
-      .eq("id", orderedProduct?.product.id);
-    if (error) throw new Error("error updating product");
-    setLoading(false);
-    dispatch({ type: Actions.setEditMode, payload: false });
-    dispatch({ type: Actions.setIsProductFormOpen, payload: false });
-    dispatch({ type: Actions.setRevalidateProducts });
-  }
 
   //* ---- JSX
   return (
     <Modal
-      title={!editMode ? "New product" : "Edit product"}
+      title={"New product"}
       onClose={closeModal}
       isOpen={isProductFormOpen}
     >
       <form
-        onSubmit={!editMode ? createProduct : updateProduct}
+        onSubmit={createProduct}
         className="flex flex-col items-center justify-between w-full h-full"
       >
         <div className="w-full space-y-6">
@@ -115,8 +86,6 @@ const NewProductPage = () => {
                 className="object-cover rounded-2xl ring-2 ring-white aspect-square"
               />
               <input
-                readOnly={editMode}
-                disabled={editMode}
                 type="file"
                 className="absolute invisible"
                 onChange={(e) => {
@@ -130,8 +99,6 @@ const NewProductPage = () => {
               <MdImage size="24px" />
               <p>Product image</p>
               <input
-                readOnly={editMode}
-                disabled={editMode}
                 type="file"
                 className="absolute invisible"
                 onChange={(e) => {
@@ -176,11 +143,7 @@ const NewProductPage = () => {
             loading ? "text-gray-600 bg-gray-300" : "text-green-600 bg-white"
           }`}
         >
-          {!loading
-            ? !editMode
-              ? "Create product"
-              : "Update product"
-            : "Submitting..."}
+          {!loading ? "Create product" : "Submitting..."}
         </button>
       </form>
     </Modal>

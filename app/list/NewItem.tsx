@@ -65,7 +65,7 @@ const NewItemPage = () => {
         className="flex flex-col items-center justify-between w-full h-full"
       >
         <div className="w-full space-y-6">
-          //* ---- TITLE INPUT
+          {/* ---- TITLE INPUT */}
           <label className="input-label">
             <MdSpellcheck size={"24px"} />
             <input
@@ -77,7 +77,8 @@ const NewItemPage = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
-          //* ---- CATEGORY RADIO INPUT
+
+          {/* ---- CATEGORY RADIO INPUT */}
           <div className="w-full h-auto flex justify-between">
             <CategoryRadio
               name={"Food"}
@@ -136,11 +137,11 @@ const CategoryRadio = ({
   return (
     <div className="flex flex-col space-y-2 overflow-hidden items-center">
       <label
-        className={`w-16 h-w-16 rounded border-4 ${
+        className={`w-16 h-w-16 rounded border-4 bg-white ${
           val === name ? "border-yellow-400" : "border-gray-100"
         }`}
       >
-        <div className="w-full h-full">
+        <div className="w-full h-full bg-white">
           <Image
             alt="food"
             src={url}

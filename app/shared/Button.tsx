@@ -5,9 +5,16 @@ type ButtonProps = {
   shape: "square" | "long" | "long2" | "none" | "circle";
   disabled?: boolean;
   execute: Function;
+  bg?: string;
 };
 
-function Button({ children, shape, disabled = false, execute }: ButtonProps) {
+function Button({
+  children,
+  shape,
+  disabled = false,
+  execute,
+  bg = "bg-gray-50",
+}: ButtonProps) {
   return (
     <button
       onClick={() => execute()}
@@ -19,7 +26,7 @@ function Button({ children, shape, disabled = false, execute }: ButtonProps) {
           : shape === "none"
           ? "w-11 rounded-full h-11 bg-transparent text-purple-800"
           : shape === "circle"
-          ? `w-8 rounded-full h-8 bg-gray-50 opacity-80 text-gray-400 absolute top-1 left-1`
+          ? `w-8 rounded-full h-8 ${bg} opacity-80 absolute top-1 left-1`
           : "w-full py-2 bg-purple-600 border border-gray-300"
       } ${disabled && "bg-gray-400 border-none"}`}
       disabled={disabled}

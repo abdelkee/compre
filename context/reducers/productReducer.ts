@@ -2,11 +2,10 @@ import { ProductType } from "../../types";
 
 export enum Actions {
     "setOrderedProduct",
-    "setEditMode",
     "setIsProductFormOpen",
     "setIsOrderFormOpen",
     "setRevalidateProducts",
-    "setRevalidateOrders"
+    "setRevalidateOrders",
 }
 
 export type InitialProductStateType = {
@@ -14,7 +13,6 @@ export type InitialProductStateType = {
         product: ProductType
         quantity: number
     };
-    editMode: boolean;
     isProductFormOpen: boolean;
     isOrderFormOpen: boolean;
     revalidateProducts: boolean
@@ -31,7 +29,6 @@ export const initialProductState = {
         },
         quantity: 1
     },
-    editMode: false,
     isProductFormOpen: false,
     isOrderFormOpen: false,
     revalidateProducts: false,
@@ -40,7 +37,6 @@ export const initialProductState = {
 
 export type ProductActionType =
     | { type: Actions.setOrderedProduct; payload: InitialProductStateType['orderedProduct'] }
-    | { type: Actions.setEditMode; payload: InitialProductStateType['editMode'] }
     | { type: Actions.setIsProductFormOpen; payload: InitialProductStateType['isProductFormOpen'] }
     | { type: Actions.setIsOrderFormOpen; payload: InitialProductStateType['isOrderFormOpen'] }
     | { type: Actions.setRevalidateProducts }
@@ -52,11 +48,6 @@ export const productReducer = (state: InitialProductStateType, action: ProductAc
             return {
                 ...state,
                 orderedProduct: action.payload,
-            };
-        case Actions.setEditMode:
-            return {
-                ...state,
-                editMode: action.payload,
             };
         case Actions.setIsProductFormOpen:
             return {
