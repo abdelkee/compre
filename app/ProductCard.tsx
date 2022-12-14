@@ -197,7 +197,7 @@ function ProductCard({ product }: { product: ProductType }) {
             onChange={(e) => setTitle(e.target.value)}
           />
         ) : (
-          <div className="p-1 font-semibold text-ellipsis">{product.title}</div>
+          <div className="p-1 font-semibold truncate">{product.title}</div>
         )}
         {isEditMode ? (
           <input
