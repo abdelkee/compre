@@ -2,15 +2,14 @@
 
 import { MdAttachMoney, MdNoteAlt, MdSpellcheck } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector, useUser } from "../context/ContextHook";
 import Modal from "./shared/Modal";
 import { supabase } from "../utils/initSupabase";
 import { Actions } from "../context/reducers/productReducer";
+import toast from "react-hot-toast";
 
 const NewOrderPage = () => {
   //* ---- HOOKS
-  const router = useRouter();
   const { user } = useUser();
   const { orderedProduct, isOrderFormOpen } = useSelector().productContext;
   const dispatch = useDispatch().productContext;
@@ -30,20 +29,21 @@ const NewOrderPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await supabase.from("orders").insert({
+      const { error } = await supabase.from("orders").insert({
         title: orderedProduct?.product.title,
         price,
         quantity: orderedProduct?.quantity,
         note,
         user_id: user?.id,
       });
+      if (error) return toast.error("Error creating order!");
+      toast.success("Order added successfully!");
     } catch (error) {
-      throw new Error("error creating order");
+      return toast.error("Error creating order!");
     } finally {
       setLoading(false);
-      dispatch({ type: Actions.setIsOrderFormOpen, payload: false });
       document.body.style.overflow = "auto";
-      router.replace("/cart");
+      dispatch({ type: Actions.setIsOrderFormOpen, payload: false });
     }
   }
   function closeModal() {

@@ -115,12 +115,12 @@ function ProductCard({ product }: { product: ProductType }) {
             .eq("id", product.id);
           if (error) return toast.error("error updating product");
         }
-        setIsEditMode(false);
       }
     } catch (error) {
       toast.error("error updating product");
     } finally {
       setLoading(false);
+      setIsEditMode(false);
       dispatch({ type: Actions.setRevalidateProducts });
     }
   };
@@ -197,7 +197,7 @@ function ProductCard({ product }: { product: ProductType }) {
             onChange={(e) => setTitle(e.target.value)}
           />
         ) : (
-          <div className="p-1">{product.title}</div>
+          <div className="p-1 font-semibold">{product.title}</div>
         )}
         {isEditMode ? (
           <input
@@ -216,7 +216,7 @@ function ProductCard({ product }: { product: ProductType }) {
             onChange={(e) => setPrice(parseFloat(e.target.value))}
           />
         ) : (
-          <div className="p-1">{product.price}</div>
+          <div className="p-1">{"$ " + product.price}</div>
         )}
       </section>
 

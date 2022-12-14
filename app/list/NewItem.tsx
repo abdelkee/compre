@@ -47,6 +47,8 @@ const NewItemPage = () => {
       } catch (error) {
         toast.error("error saving item..");
       } finally {
+        setTitle("");
+        setCategory("Food");
         dispatch({ type: Actions.setIsItemFormOpen, payload: false });
         document.body.style.overflow = "auto";
         dispatch({ type: Actions.setRevalidateItemPills });
