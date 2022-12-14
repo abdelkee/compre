@@ -42,6 +42,7 @@ const NewOrderPage = () => {
     } finally {
       setLoading(false);
       dispatch({ type: Actions.setIsOrderFormOpen, payload: false });
+      document.body.style.overflow = "auto";
       router.replace("/cart");
     }
   }

@@ -40,27 +40,40 @@ const NewProductPage = () => {
     } = supabase.storage.from("products").getPublicUrl(path);
     return publicUrl;
   }
-  async function insertProduct(publicUrl: string) {
+  async function insertProduct(publicUrl?: string) {
     const { error } = await supabase.from("products").insert([
       {
         title,
         price,
-        image: publicUrl,
+        image: publicUrl || "/placeholder.png",
       },
     ]);
     if (error) throw new Error("error creating product " + error.message);
+    setFile(undefined);
+    setImage("");
+    setPrice(0);
+    setTitle("");
   }
   async function createProduct(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    const { path } = await uploadImage();
-    if (path) {
-      const publicUrl = await getPublicUrl(path);
-      await insertProduct(publicUrl);
+    try {
+      if (file) {
+        const { path } = await uploadImage();
+        const publicUrl = await getPublicUrl(path);
+        await insertProduct(publicUrl);
+        toast.success("Product added successfully!");
+      } else {
+        await insertProduct();
+        toast.success("Product added successfully!");
+      }
+    } catch (error) {
+      toast.error("Error creating product!");
+    } finally {
       setLoading(false);
       dispatch({ type: Actions.setIsProductFormOpen, payload: false });
+      document.body.style.overflow = "auto";
       dispatch({ type: Actions.setRevalidateProducts });
-      toast.success("Product added successfully!");
     }
   }
 
@@ -87,6 +100,7 @@ const NewProductPage = () => {
               />
               <input
                 type="file"
+                accept="image/png, image/jpeg"
                 className="absolute invisible"
                 onChange={(e) => {
                   setImage(URL.createObjectURL(e.target.files![0]));

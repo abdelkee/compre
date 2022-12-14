@@ -48,6 +48,7 @@ const NewItemPage = () => {
         toast.error("error saving item..");
       } finally {
         dispatch({ type: Actions.setIsItemFormOpen, payload: false });
+        document.body.style.overflow = "auto";
         dispatch({ type: Actions.setRevalidateItemPills });
       }
     }

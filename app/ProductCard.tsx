@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {
   MdAddShoppingCart,
+  MdCameraAlt,
   MdClose,
   MdFileUpload,
   MdModeEditOutline,
@@ -26,6 +27,8 @@ function ProductCard({ product }: { product: ProductType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState(product.title);
   const [price, setPrice] = useState(product.price);
+  const [image, setImage] = useState(product.image);
+  const [file, setFile] = useState<File>();
 
   //* ---- FUNCTIONS
   const openOrderModal = () => {
@@ -40,6 +43,7 @@ function ProductCard({ product }: { product: ProductType }) {
     if (isEditMode) {
       setTitle(product.title);
       setPrice(product.price);
+      setImage(product.image);
     }
     setIsEditMode(!isEditMode);
   };
@@ -54,22 +58,63 @@ function ProductCard({ product }: { product: ProductType }) {
     setQuantity((prev) => prev + 1);
   };
 
+  async function uploadImage() {
+    const { data: fileSource, error } = await supabase.storage
+      .from("products")
+      .upload(("img" + file?.name) as string, file as File);
+    if (error) throw new Error("error uploading image" + error.message);
+    return fileSource;
+  }
+
+  async function getPublicUrl(path: string) {
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("products").getPublicUrl(path);
+    return publicUrl;
+  }
+
+  const updateImage = async () => {
+    const { path } = await uploadImage();
+    const publicUrl = await getPublicUrl(path);
+    const { error } = await supabase
+      .from("products")
+      .update({ image: publicUrl })
+      .eq("id", product.id);
+    if (error) return toast.error("Error updating the image!");
+    let url = product.image.split("/");
+    await supabase.storage.from("products").remove(url[url.length - 1]);
+  };
+
   const updateProduct = async () => {
-    if (title === product.title && price === product.price)
+    if (
+      title === product.title &&
+      price === product.price &&
+      image === product.image
+    )
       return setIsEditMode(false);
     setLoading(true);
     try {
-      if (title === "" || title.length < 3) {
-        return toast.error("title must be more than 2 letters");
-      } else if (price < 0 || isNaN(price)) {
-        return toast.error("price must be a number");
-      } else {
-        const capTitle = title.charAt(0).toUpperCase() + title.slice(1);
-        const { error } = await supabase
-          .from("products")
-          .update({ title: capTitle, price })
-          .eq("id", product.id);
-        if (error) return toast.error("error updating product");
+      if (image !== product.image) {
+        if (file?.type === "video/mp4") {
+          return toast.error("file format not supported!");
+        } else {
+          await updateImage();
+        }
+      }
+
+      if (title !== product.title || price !== product.price) {
+        if (title === "" || title.length < 3) {
+          return toast.error("title must be more than 2 letters");
+        } else if (price < 0 || isNaN(price)) {
+          return toast.error("price must be a number");
+        } else {
+          const capTitle = title.charAt(0).toUpperCase() + title.slice(1);
+          const { error } = await supabase
+            .from("products")
+            .update({ title: capTitle, price })
+            .eq("id", product.id);
+          if (error) return toast.error("error updating product");
+        }
         setIsEditMode(false);
       }
     } catch (error) {
@@ -89,11 +134,38 @@ function ProductCard({ product }: { product: ProductType }) {
   //* ---- JSX
   return (
     <div
-      onBlur={(e) => handleBlur(e)}
+      // onBlur={(e) => handleBlur(e)}
       className={` relative z-10 overflow-hidden bg-white border ${
         isEditMode ? "border-green-400" : "border-gray-200"
       } rounded-md ${!isEditMode ? "shadow-md" : "shadow-lg"}`}
     >
+      <section className="w-full h-[140px] overflow-hidden p-1 rounded-md bg-white grid place-items-center">
+        <Image
+          alt={title}
+          src={image}
+          width="0"
+          height="0"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="./blurPlaceholder.png"
+          sizes="100vw"
+          style={{ width: "auto", height: "100%" }}
+        />
+      </section>
+      {isEditMode && (
+        <label className="absolute inset-0 w-full h-[140px] backdrop-brightness-50 text-white grid place-items-center">
+          <MdCameraAlt size={"24px"} />
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            className="w-full h-full opacity-0 absolute"
+            onChange={(e) => {
+              setImage(URL.createObjectURL(e.target.files![0]));
+              setFile(e.target.files![0]);
+            }}
+          />
+        </label>
+      )}
       <Button
         shape="circle"
         execute={toggleEditMode}
@@ -105,19 +177,6 @@ function ProductCard({ product }: { product: ProductType }) {
           <MdClose size={"20px"} />
         )}
       </Button>
-      <section className="w-full h-[140px] overflow-hidden p-1 rounded-md bg-white">
-        <Image
-          alt={product.title}
-          src={product.image}
-          width="0"
-          height="0"
-          loading="lazy"
-          placeholder="blur"
-          blurDataURL="./blurPlaceholder.png"
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-        />
-      </section>
 
       {/* //* ---- INFO SECTION */}
       <section className="w-full p-2 font-medium">

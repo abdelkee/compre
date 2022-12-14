@@ -9,11 +9,6 @@ const ProductsHeader = () => {
   const dispatch = useDispatch().productContext;
   //* ---- FUNCTIONS
   function openProductModal() {
-    const initProduct = { id: "", title: "", price: 0, image: "" };
-    // dispatch({
-    //   type: Actions.setOrderedProduct,
-    //   payload: { product: initProduct, quantity: 1 },
-    // });
     dispatch({ type: Actions.setIsProductFormOpen, payload: true });
   }
   //* ---- JSX
