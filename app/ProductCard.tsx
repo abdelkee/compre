@@ -82,7 +82,7 @@ function ProductCard({ product }: { product: ProductType }) {
       .eq("id", product.id);
     if (error) return toast.error("Error updating the image!");
     let url = product.image.split("/");
-    await supabase.storage.from("products").remove(url[url.length - 1]);
+    await supabase.storage.from("products").remove([url[url.length - 1]]);
   };
 
   const updateProduct = async () => {
