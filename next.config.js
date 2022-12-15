@@ -9,12 +9,3 @@ module.exports = withPWA({
     domains: ["exgqcqdbjjdllndxzmze.supabase.co"],
   },
 });
-
-// module.exports = withPWA({
-//   pwa: {
-//     dest: "public",
-//     register: true,
-//     skipWaiting: true,
-//
-//   },
-// });

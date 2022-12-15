@@ -11,8 +11,8 @@ export default function Head() {
       <meta name="theme-color" content="#000" />
       <title>Title of the project</title>
       <link rel="manifest" href="/manifest.json" />
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+      <link rel="shortcut icon" href="/favicon.png" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
     </>
   );
 }

@@ -9,69 +9,49 @@
 	"orientation": "portrait",
 	"icons": [
 		{
-			"src": "/icon/android-icon-192x192-seochecker-manifest-8014.png",
+			"src": "/icons/icon-48x48.png",
 			"type": "image/png",
-			"sizes": "192x192"
+			"sizes": "48x48"
 		},
 		{
-			"src": "/icon/apple-icon-180x180-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "180x180"
-		},
-		{
-			"src": "/icon/apple-icon-152x152-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "152x152"
-		},
-		{
-			"src": "/icon/apple-icon-144x144-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "144x144"
-		},
-		{
-			"src": "/icon/apple-icon-120x120-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "120x120"
-		},
-		{
-			"src": "/icon/apple-icon-114x114-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "114x114"
-		},
-		{
-			"src": "/icon/favicon-96x96-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "96x96"
-		},
-		{
-			"src": "/icon/apple-icon-76x76-seochecker-manifest-8014.png",
-			"type": "image/png",
-			"sizes": "76x76"
-		},
-		{
-			"src": "/icon/apple-icon-72x72-seochecker-manifest-8014.png",
+			"src": "/icons/icon-72x72.png",
 			"type": "image/png",
 			"sizes": "72x72"
 		},
 		{
-			"src": "/icon/apple-icon-60x60-seochecker-manifest-8014.png",
+			"src": "/icons/icon-96x96.png",
 			"type": "image/png",
-			"sizes": "60x60"
+			"sizes": "96x96"
 		},
 		{
-			"src": "/icon/apple-icon-57x57-seochecker-manifest-8014.png",
+			"src": "/icons/icon-128x128.png",
 			"type": "image/png",
-			"sizes": "57x57"
+			"sizes": "128x128"
 		},
 		{
-			"src": "/icon/favicon-32x32-seochecker-manifest-8014.png",
+			"src": "/icons/icon-144x144.png",
 			"type": "image/png",
-			"sizes": "32x32"
+			"sizes": "144x144"
 		},
 		{
-			"src": "/icon/favicon-16x16-seochecker-manifest-8014.png",
+			"src": "/icons/icon-152x152.png",
 			"type": "image/png",
-			"sizes": "16x16"
+			"sizes": "152x152"
+		},
+		{
+			"src": "/icons/icon-192x192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/icons/icon-384x384.png",
+			"type": "image/png",
+			"sizes": "384x384"
+		},
+		{
+			"src": "/icons/icon-512x512.png",
+			"type": "image/png",
+			"sizes": "512x512"
 		}
 	],
 	"prefer_related_applications": false
