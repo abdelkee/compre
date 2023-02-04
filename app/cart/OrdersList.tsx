@@ -15,6 +15,7 @@ function OrdersList() {
     supabase
       .from("orders")
       .select()
+      .order("created_at")
       .then(({ data, error }) => {
         if (error) throw error.message;
         setOrders(data);
