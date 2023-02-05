@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { ReactNode, useState, useEffect } from "react";
 import { useUser } from "../../context/ContextHook";
+import Loading from "../Loading";
 
 function Wrapper({ children }: { children: ReactNode }) {
   const { session } = useUser();
@@ -13,7 +14,11 @@ function Wrapper({ children }: { children: ReactNode }) {
   }, []);
   if (loading)
     return (
-      <div className="w-full mt-40 grid place-items-center">Loading...</div>
+      <div className="flex items-center justify-center w-full h-screen ">
+        <div className="lds-heart">
+          <div></div>
+        </div>
+      </div>
     );
   if (session === null)
     return (
